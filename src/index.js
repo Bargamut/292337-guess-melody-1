@@ -12,7 +12,7 @@ import WelcomeScreen from './components/welcome-screen/welcome-screen.jsx';
  * @return {WelcomeScreen}
  */
 const App = (props) => {
-  const {gameTime, errorCount} = props;
+  const {time: gameTime, errorCount} = props;
 
   return <WelcomeScreen
     time={gameTime}
@@ -21,7 +21,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  gameTime: PropTypes.number.isRequired,
+  time: PropTypes.number.isRequired,
   errorCount: PropTypes.number.isRequired
 };
 
