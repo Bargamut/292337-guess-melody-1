@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import WelcomeScreen from './components/welcome-screen/welcome-screen.jsx';
+
 
 /**
  * @description Компонент приложения
@@ -10,13 +12,17 @@ import WelcomeScreen from './components/welcome-screen/welcome-screen.jsx';
  * @return {WelcomeScreen}
  */
 const App = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const {gameTime, errorCount} = props;
+  const {time: gameTime, errorCount} = props;
 
   return <WelcomeScreen
     time={gameTime}
     errorCount={errorCount}
   />;
+};
+
+App.propTypes = {
+  time: PropTypes.number.isRequired,
+  errorCount: PropTypes.number.isRequired
 };
 
 const init = () => {
