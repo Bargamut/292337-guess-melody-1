@@ -44,6 +44,7 @@ const GenreQuestionScreen = ({question, onAnswer}) => {
 
 GenreQuestionScreen.propTypes = {
   question: PropTypes.shape({
+    type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
     answers: PropTypes.arrayOf(
         PropTypes.shape({
           genre: PropTypes.oneOf([`indie-rock`, `rock`, `folk-rock`]).isRequired,
