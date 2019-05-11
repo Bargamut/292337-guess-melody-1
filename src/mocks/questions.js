@@ -7,7 +7,6 @@ const settings = {
 export const questions = [
   {
     type: `genre`,
-    title: `Выберите инди-рок треки`,
     genre: `indie-rock`,
     answers: [
       {
