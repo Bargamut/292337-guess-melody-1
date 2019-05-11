@@ -4,6 +4,7 @@ import GenreQuestionScreen from './genre-question-screen.jsx';
 
 const mock = {
   question: {
+    type: `genre`,
     genre: `rock`,
     answers: [
       {
