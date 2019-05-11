@@ -4,6 +4,11 @@ import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
+const Type = {
+  ARTIST: `game--artist`,
+  GENRE: `game--genre`
+};
+
 /**
  * @description Компонент приложения
  * @param {Object} props игорвое время
@@ -24,9 +29,10 @@ class App extends Component {
 
   render() {
     const {questions} = this.props;
+    const question = questions[this.state.question];
 
     return (
-      <section className="game game--artist">
+      <section className={`game ${question ? Type[question.type.toUpperCase()] : ``}`}>
         <header className="game__header">
           <a className="game__back" href="#">
             <span className="visually-hidden">Сыграть ещё раз</span>
@@ -50,7 +56,7 @@ class App extends Component {
           </div>
         </header>
 
-        {this._getScreen(questions[this.state.question])}
+        {this._getScreen(question)}
       </section>
     );
   }
@@ -96,14 +102,14 @@ class App extends Component {
   /**
    * @description Обработать клик по кнопке старта / ответу
    * @author Paul "Bargamut" Petrov
-   * @date 2019-05-11
+   * @date 2019-05-12
    * @memberof App
    */
   _handleClick() {
-    const questionIndex = this.state.question + 1;
+    let questionIndex = this.state.question + 1;
 
-    if (questionIndex > this.props.questions.length) {
-      questionIndex = 0;
+    if (questionIndex >= this.props.questions.length) {
+      questionIndex = -1;
     }
 
     this.setState({question: questionIndex});
