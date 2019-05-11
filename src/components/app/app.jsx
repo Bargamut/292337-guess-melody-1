@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
+import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
 /**
  * @description Компонент приложения
@@ -79,6 +80,11 @@ class App extends Component {
     switch (question.type) {
       case `genre`:
         return <GenreQuestionScreen
+          question={question}
+          onAnswer={this._handleClick}
+        />;
+      case `artist`:
+        return <ArtistQuestionScreen
           question={question}
           onAnswer={this._handleClick}
         />;
