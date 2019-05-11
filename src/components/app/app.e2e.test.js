@@ -97,7 +97,7 @@ it(`Switches to Welcome Screen after last question`, () => {
   app.update();
 
   const form = app.find(`form`);
-  form.simulate(`submit`, {
+  form.simulate(`change`, {
     preventDefault() {}
   });
   app.update();

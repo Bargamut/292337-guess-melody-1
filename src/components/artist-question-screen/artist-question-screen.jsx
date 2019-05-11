@@ -12,11 +12,7 @@ const ArtistQuestionScreen = ({question, onAnswer}) => {
         <audio src={song.src}/>
       </div>
 
-      <form className="game__artist" onSubmit={(evt) => {
-        evt.preventDefault();
-
-        onAnswer();
-      }}>
+      <form className="game__artist" onChange={() => onAnswer()}>
         {answers.map((it, i) => {
           const key = `answer-${i}`;
 

@@ -27,27 +27,25 @@ const mock = {
       }
     ]
   },
-  handleSubmit: jest.fn(),
-  preventFormSending: jest.fn()
+  handleChange: jest.fn()
 };
 
 it(`Form does not send by submit answer`, () => {
   const {
     question,
-    handleSubmit,
+    handleChange,
     preventFormSending
   } = mock;
 
   const artistQuestionScreen = shallow(
       <ArtistQuestionScreen
         question={question}
-        onAnswer={handleSubmit}
+        onAnswer={handleChange}
       />
   );
 
   const form = artistQuestionScreen.find(`form`);
-  form.simulate(`submit`, {preventDefault: preventFormSending});
+  form.simulate(`change`, {preventDefault: preventFormSending});
 
-  expect(handleSubmit).toHaveBeenCalledTimes(1);
-  expect(preventFormSending).toHaveBeenCalledTimes(1);
+  expect(handleChange).toHaveBeenCalledTimes(1);
 });
