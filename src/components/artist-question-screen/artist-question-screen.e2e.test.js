@@ -1,30 +1,29 @@
 import React from 'react';
 import {configure, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import GenreQuestionScreen from './genre-question-screen.jsx';
+import ArtistQuestionScreen from './artist-question-screen.jsx';
 
 configure({adapter: new Adapter()});
 
 const mock = {
   question: {
-    type: `genre`,
-    genre: `rock`,
+    type: `artist`,
+    song: {
+      artist: `Пелагея`,
+      src: ``
+    },
     answers: [
       {
-        genre: `indie-rock`,
-        src: ``
+        artist: `Пелагея`,
+        photo: ``
       },
       {
-        genre: `rock`,
-        src: ``
+        artist: `Краснознаменная дивизия имени моей бабушки`,
+        photo: ``
       },
       {
-        genre: `indie-rock`,
-        src: ``
-      },
-      {
-        genre: `folk-rock`,
-        src: ``
+        artist: `Lorde`,
+        photo: ``
       }
     ]
   },
@@ -32,21 +31,21 @@ const mock = {
   preventFormSending: jest.fn()
 };
 
-it(`Form does not sending by submit answer`, () => {
+it(`Form does not send by submit answer`, () => {
   const {
     question,
     handleSubmit,
     preventFormSending
   } = mock;
 
-  const genreQuestionScreen = shallow(
-      <GenreQuestionScreen
+  const artistQuestionScreen = shallow(
+      <ArtistQuestionScreen
         question={question}
         onAnswer={handleSubmit}
       />
   );
 
-  const form = genreQuestionScreen.find(`form`);
+  const form = artistQuestionScreen.find(`form`);
   form.simulate(`submit`, {preventDefault: preventFormSending});
 
   expect(handleSubmit).toHaveBeenCalledTimes(1);
