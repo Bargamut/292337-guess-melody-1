@@ -35,7 +35,18 @@ it(`Genre Question Screen renders correctly`, () => {
       <GenreQuestionScreen
         question={question}
         onAnswer={handleSubmit}
-      />
+      />,
+      {
+        createNodeMock: (element) => {
+          if (element.type === `audio`) {
+            return {
+              src: ``
+            };
+          }
+
+          return null;
+        }
+      }
   ).toJSON();
 
   expect(genreQuestionScreen).toMatchSnapshot();

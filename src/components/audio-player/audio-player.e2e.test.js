@@ -26,10 +26,13 @@ it(`Audio Player callback runs on PlayBtn click`, () => {
       />
   );
 
-  const btnPlay = audioPlayer.find(`.track__button`);
+  audioPlayer.instance()._audioRef.current.pause = () => {};
+  audioPlayer.instance()._audioRef.current.play = () => {};
 
-  // eslint-disable-next-line no-console
-  // console.log(audioPlayer.instance()._handlePlayBtnClick);
+  audioPlayer.setState({isLoading: false});
+  audioPlayer.update();
+
+  const btnPlay = audioPlayer.find(`.track__button`);
 
   expect(btnPlay.length).toEqual(1);
 
@@ -48,17 +51,17 @@ it(`Audio Player start / stop playback by clicking "Play" button`, () => {
       />
   );
 
+  audioPlayer.instance()._audioRef.current.pause = () => {};
+  audioPlayer.instance()._audioRef.current.play = () => {};
+
+  audioPlayer.setState({isLoading: false});
+  audioPlayer.update();
+
   const btnPlay = audioPlayer.find(`.track__button`);
 
   expect(btnPlay.length).toEqual(1);
 
   btnPlay.simulate(`click`);
-
-  audioPlayer.setProps({isPlaying: true});
-  audioPlayer.update();
-
-  // eslint-disable-next-line no-console
-  console.log(audioPlayer.state());
 
   expect(audioPlayer.state(`isPlaying`)).toEqual(true);
 
