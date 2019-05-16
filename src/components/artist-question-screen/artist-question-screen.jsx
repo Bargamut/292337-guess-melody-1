@@ -1,35 +1,51 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import AudioPlayer from '../audio-player/audio-player.jsx';
 
-const ArtistQuestionScreen = ({question, onAnswer}) => {
-  const {song, answers} = question;
+class ArtistQuestionScreen extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <section className="game__screen">
-      <h2 className="game__title">Кто исполняет эту песню?</h2>
-      <div className="game__track">
-        <button className="track__button track__button--play" type="button"></button>
-        <audio src={song.src}/>
-      </div>
+    this.state = {
+      isPlaying: false
+    };
+  }
 
-      <form className="game__artist" onChange={() => onAnswer()}>
-        {answers.map((it, i) => {
-          const key = `answer-${i}`;
+  render() {
+    const {question, onAnswer} = this.props;
+    const {song, answers} = question;
+    const {isPlaying} = this.state;
 
-          return (
-            <div className="artist" key={key}>
-              <input className="artist__input visually-hidden" type="radio" name="answer" value={key} id={key} />
-              <label className="artist__name" htmlFor={key}>
-                <img className="artist__picture" src={it.photo} alt={it.artist} />
-                {it.artist}
-              </label>
-            </div>
-          );
-        })}
-      </form>
-    </section>
-  );
-};
+    return (
+      <section className="game__screen">
+        <h2 className="game__title">Кто исполняет эту песню?</h2>
+        <div className="game__track">
+          <AudioPlayer
+            src={song.src}
+            isPlaying={isPlaying}
+            onPlayBtnClick={() => this.setState({isPlaying: !this.state.isPlaying})}
+          />
+        </div>
+
+        <form className="game__artist" onChange={() => onAnswer()}>
+          {answers.map((it, i) => {
+            const key = `answer-${i}`;
+
+            return (
+              <div className="artist" key={key}>
+                <input className="artist__input visually-hidden" type="radio" name="answer" value={key} id={key} />
+                <label className="artist__name" htmlFor={key}>
+                  <img className="artist__picture" src={it.photo} alt={it.artist} />
+                  {it.artist}
+                </label>
+              </div>
+            );
+          })}
+        </form>
+      </section>
+    );
+  }
+}
 
 ArtistQuestionScreen.propTypes = {
   question: PropTypes.shape({
