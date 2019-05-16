@@ -1,46 +1,60 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import AudioPlayer from '../audio-player/audio-player.jsx';
 
-const GenreQuestionScreen = ({question, onAnswer}) => {
-  const {
-    answers,
-    genre,
-  } = question;
+class GenreQuestionScreen extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <section className="game__screen">
-      <h2 className="game__title">Выберите {genre} треки</h2>
-      <form className="game__tracks" onSubmit={(evt) => {
-        evt.preventDefault();
+    this.state = {
+      activePlayerKey: null
+    };
+  }
 
-        onAnswer();
-      }}>
-        {answers.map(
-            (it, i) => {
-              const key = `answer-${i}`;
+  render() {
+    const {question, onAnswer} = this.props;
+    const {
+      answers,
+      genre,
+    } = question;
 
-              return (
-                <div className="track" key={key}>
-                  <button className="track__button track__button--play" type="button"></button>
+    return (
+      <section className="game__screen">
+        <h2 className="game__title">Выберите {genre} треки</h2>
+        <form className="game__tracks" onSubmit={(evt) => {
+          evt.preventDefault();
 
-                  <div className="track__status">
-                    <audio src={it.src} />
+          onAnswer();
+        }}>
+          {answers.map(
+              (it, i) => {
+                const key = `answer-${i}`;
+
+                return (
+                  <div className="track" key={key}>
+                    <AudioPlayer
+                      src={it.src}
+                      isPlaying={key === this.state.activePlayerKey}
+                      onPlayBtnClick={() => this.setState({
+                        activePlayerKey: this.state.activePlayerKey === key ? null : key
+                      })}
+                    />
+
+                    <div className="game__answer">
+                      <input className="game__input visually-hidden" type="checkbox" name="answer" value={key} id={key} />
+                      <label className="game__check" htmlFor={key}>Отметить</label>
+                    </div>
                   </div>
+                );
+              }
+          )}
 
-                  <div className="game__answer">
-                    <input className="game__input visually-hidden" type="checkbox" name="answer" value={key} id={key} />
-                    <label className="game__check" htmlFor={key}>Отметить</label>
-                  </div>
-                </div>
-              );
-            }
-        )}
-
-        <button className="game__submit button" type="submit">Ответить</button>
-      </form>
-    </section>
-  );
-};
+          <button className="game__submit button" type="submit">Ответить</button>
+        </form>
+      </section>
+    );
+  }
+}
 
 GenreQuestionScreen.propTypes = {
   question: PropTypes.shape({
