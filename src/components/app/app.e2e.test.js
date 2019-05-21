@@ -1,7 +1,7 @@
 import React from 'react';
 import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import App from './app.jsx';
+import {App} from './app.jsx';
 
 configure({adapter: new Adapter()});
 
@@ -41,6 +41,9 @@ it(`On click to WelcomeScreen App switches to the first question`, () => {
         time={0}
         errorCount={0}
         questions={questions}
+        step={-1}
+        mistakes={0}
+        onUserAnswer={jest.fn()}
       />
   );
 
@@ -48,7 +51,7 @@ it(`On click to WelcomeScreen App switches to the first question`, () => {
   button.simulate(`click`);
   app.update();
 
-  expect(app.state(`question`)).toEqual(0);
+  expect(app.prop(`step`)).toEqual(0);
 
   const title = app.find(`.game__title`);
   expect(title).toHaveLength(1);
@@ -63,10 +66,13 @@ it(`Switches to another question`, () => {
         time={0}
         errorCount={0}
         questions={questions}
+        step={-1}
+        mistakes={0}
+        onUserAnswer={jest.fn()}
       />
   );
 
-  app.setState({question: 0});
+  app.setProps({step: 0});
   app.update();
 
   const form = app.find(`form`);
@@ -75,7 +81,7 @@ it(`Switches to another question`, () => {
   });
   app.update();
 
-  expect(app.state(`question`)).toEqual(1);
+  expect(app.prop(`step`)).toEqual(1);
 
   let title = app.find(`.game__title`);
   expect(title).toHaveLength(1);
@@ -90,19 +96,22 @@ it(`Switches to Welcome Screen after last question`, () => {
         time={0}
         errorCount={0}
         questions={questions}
+        step={-1}
+        mistakes={0}
+        onUserAnswer={jest.fn()}
       />
   );
 
-  app.setState({question: questions.length - 1});
+  app.setProps({step: questions.length - 1});
   app.update();
 
-  const form = app.find(`form`);
-  form.simulate(`change`, {
+  const answerInput = app.find(`#answer-0`);
+  answerInput.simulate(`change`, {
     preventDefault() {}
   });
   app.update();
 
-  expect(app.state(`question`)).toEqual(-1);
+  expect(app.prop(`step`)).toEqual(-1);
 
   let welcomeSection = app.find(`.welcome`);
   expect(welcomeSection).toHaveLength(1);

@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from "./app.jsx";
+import {App} from "./app.jsx";
 
 
 const mock = {
@@ -38,6 +38,9 @@ it(`App correctly renders after relaunch`, () => {
       time={0}
       errorCount={0}
       questions={questions}
+      step={-1}
+      mistakes={0}
+      onUserAnswer={jest.fn()}
     />)
     .toJSON();
 

@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {ActionCreators} from '../../reducers/reducer';
+
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
@@ -21,15 +24,11 @@ class App extends Component {
     super(props);
 
     this._handleClick = this._handleClick.bind(this);
-
-    this.state = {
-      question: -1
-    };
   }
 
   render() {
-    const {questions} = this.props;
-    const question = questions[this.state.question];
+    const {questions, step, mistakes} = this.props;
+    const question = questions[step];
 
     return (
       <section className={`game ${question ? Type[question.type.toUpperCase()] : ``}`}>
@@ -50,9 +49,9 @@ class App extends Component {
           </div>
 
           <div className="game__mistakes">
-            <div className="wrong"></div>
-            <div className="wrong"></div>
-            <div className="wrong"></div>
+            {new Array(mistakes).map((it, i) => {
+              return <div className="wrong" key={`wrong-answer-${i}`} />;
+            })}
           </div>
         </header>
 
@@ -86,11 +85,13 @@ class App extends Component {
     switch (question.type) {
       case `genre`:
         return <GenreQuestionScreen
+          key={`genre-question-screen-${question}`}
           question={question}
           onAnswer={this._handleClick}
         />;
       case `artist`:
         return <ArtistQuestionScreen
+          key={`article-question-screen-${question}`}
           question={question}
           onAnswer={this._handleClick}
         />;
@@ -101,25 +102,40 @@ class App extends Component {
 
   /**
    * @description Обработать клик по кнопке старта / ответу
+   * @param {Object} userAnswer Ответ пользователя
    * @author Paul "Bargamut" Petrov
    * @date 2019-05-12
    * @memberof App
    */
-  _handleClick() {
-    let questionIndex = this.state.question + 1;
+  _handleClick(userAnswer) {
+    const {questions, step} = this.props;
 
-    if (questionIndex >= this.props.questions.length) {
-      questionIndex = -1;
-    }
-
-    this.setState({question: questionIndex});
+    this.props.onUserAnswer(questions[step], userAnswer);
   }
 }
 
 App.propTypes = {
   time: PropTypes.number.isRequired,
   errorCount: PropTypes.number.isRequired,
-  questions: PropTypes.array.isRequired
+  questions: PropTypes.array.isRequired,
+  step: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
+  onUserAnswer: PropTypes.func.isRequired
 };
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, ownProps, {
+    step: state.step,
+    mistakes: state.mistakes
+  });
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onUserAnswer: (question, userAnswer) => {
+    dispatch(ActionCreators[`INCREMENT_STEP`](question, userAnswer));
+  }
+});
+
+export {App};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
