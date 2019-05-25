@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {ActionCreators} from '../../reducers/reducer';
 
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
+import GameMistakes from '../game-mistakes/game-mistakes.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
@@ -49,12 +50,7 @@ class App extends Component {
             <span className="timer__secs">00</span>
           </div>
 
-          {/* TODO: Вынести в отдельный компонент */}
-          <div className="game__mistakes">
-            {new Array(mistakes).fill().map((it, i) => {
-              return <div className="wrong" key={`wrong-answer-${i}`} />;
-            })}
-          </div>
+          <GameMistakes mistakes={mistakes} />
         </header>
 
         {this._getScreen(question)}
