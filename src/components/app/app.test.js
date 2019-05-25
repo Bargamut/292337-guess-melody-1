@@ -61,6 +61,7 @@ it(`App correctly renders with Welcome Screen`, () => {
       questions={questions}
       step={-1}
       mistakes={0}
+      onClickStartBtn={jest.fn()}
       onUserAnswer={jest.fn()}
     />,
     {
@@ -89,6 +90,7 @@ it(`App correctly renders with Genre Question Screen`, () => {
       questions={questions}
       step={0}
       mistakes={0}
+      onClickStartBtn={jest.fn()}
       onUserAnswer={jest.fn()}
     />,
     {
@@ -117,6 +119,7 @@ it(`App correctly renders with Artist Question Screen`, () => {
       questions={questions}
       step={1}
       mistakes={0}
+      onClickStartBtn={jest.fn()}
       onUserAnswer={jest.fn()}
     />,
     {
