@@ -9,7 +9,7 @@ const ActionCreators = {
     let isAnswerCorrect = false;
 
     switch (question.type) {
-      case `genre`: isAnswerCorrect = false; break;
+      case `genre`: isAnswerCorrect = userAnswer.every((genre, i) => (genre === question.answers[i].genre)); break;
       case `artist`: isAnswerCorrect = userAnswer.artist === question.song.artist; break;
     }
 
