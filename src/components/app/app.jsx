@@ -49,6 +49,7 @@ class App extends Component {
             <span className="timer__secs">00</span>
           </div>
 
+          {/* TODO: Вынести в отдельный компонент */}
           <div className="game__mistakes">
             {new Array(mistakes).fill().map((it, i) => {
               return <div className="wrong" key={`wrong-answer-${i}`} />;

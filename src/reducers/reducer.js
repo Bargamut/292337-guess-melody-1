@@ -38,6 +38,7 @@ const reducer = (state = initialState, action) => {
       });
       break;
     case `INCREMENT_MISTAKE`:
+      // TODO: При достижении максимального количества ошибок выбрасывать на экран приветсвия со сбросом состояния
       Object.assign(updatedState, state, {
         mistakes: state.mistakes + action.payload
       });
