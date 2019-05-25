@@ -3,16 +3,28 @@ const initialState = {
   step: -1
 };
 
+const BusinessLogic = {
+  isGenreAnswerCorrect: (userAnswer, question) => {
+    return userAnswer.every((answer, i) => (
+      answer === (question.genre === question.answers[i].genre))
+    );
+  },
+  isArtistAnswerCorrect: (userAnswer, question) => {
+    return userAnswer.artist === question.song.artist;
+  }
+};
 
 const ActionCreators = {
   'INCREMENT_MISTAKE': (question, userAnswer) => {
     let isAnswerCorrect = false;
 
     switch (question.type) {
-      case `genre`: isAnswerCorrect = userAnswer.every((answer, i) => (
-        answer === (question.genre === question.answers[i].genre))
-      ); break;
-      case `artist`: isAnswerCorrect = userAnswer.artist === question.song.artist; break;
+      case `genre`:
+        isAnswerCorrect = BusinessLogic.isGenreAnswerCorrect(userAnswer, question);
+        break;
+      case `artist`:
+        isAnswerCorrect = BusinessLogic.isArtistAnswerCorrect(userAnswer, question);
+        break;
     }
 
     return {
@@ -25,25 +37,29 @@ const ActionCreators = {
       type: `INCREMENT_STEP`,
       payload: 1
     };
+  },
+  'RESET_STATE': () => {
+    return {
+      type: `RESET_STATE`
+    };
   }
 };
 
 const reducer = (state = initialState, action) => {
-  const updatedState = {};
+  const updatedState = state;
 
   switch (action.type) {
     case `INCREMENT_STEP`:
-      Object.assign(updatedState, state, {
+      Object.assign(updatedState, {
         step: state.step + action.payload
       });
       break;
     case `INCREMENT_MISTAKE`:
-      // TODO: При достижении максимального количества ошибок выбрасывать на экран приветсвия со сбросом состояния
-      Object.assign(updatedState, state, {
+      Object.assign(updatedState, {
         mistakes: state.mistakes + action.payload
       });
       break;
-    default: Object.assign(updatedState, state); break;
+    case `RESET_STATE`: Object.assign(updatedState, initialState); break;
   }
 
   return updatedState;
