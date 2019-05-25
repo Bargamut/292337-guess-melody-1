@@ -23,7 +23,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this._handleClick = this._handleClick.bind(this);
+    this._handleClickStart = this._handleClickStart.bind(this);
+    this._handleClickAnswer = this._handleClickAnswer.bind(this);
   }
 
   render() {
@@ -49,7 +50,7 @@ class App extends Component {
           </div>
 
           <div className="game__mistakes">
-            {new Array(mistakes).map((it, i) => {
+            {new Array(mistakes).fill().map((it, i) => {
               return <div className="wrong" key={`wrong-answer-${i}`} />;
             })}
           </div>
@@ -78,7 +79,7 @@ class App extends Component {
       return <WelcomeScreen
         time={gameTime}
         errorCount={errorCount}
-        onClickStartBtn={this._handleClick}
+        onClickStartBtn={this._handleClickStart}
       />;
     }
 
@@ -87,13 +88,13 @@ class App extends Component {
         return <GenreQuestionScreen
           key={`genre-question-screen-${question}`}
           question={question}
-          onAnswer={this._handleClick}
+          onAnswer={this._handleClickAnswer}
         />;
       case `artist`:
         return <ArtistQuestionScreen
           key={`article-question-screen-${question}`}
           question={question}
-          onAnswer={this._handleClick}
+          onAnswer={this._handleClickAnswer}
         />;
     }
 
@@ -101,16 +102,26 @@ class App extends Component {
   }
 
   /**
-   * @description Обработать клик по кнопке старта / ответу
+   * @description Обработать клик по ответу
    * @param {Object} userAnswer Ответ пользователя
    * @author Paul "Bargamut" Petrov
    * @date 2019-05-12
    * @memberof App
    */
-  _handleClick(userAnswer) {
+  _handleClickAnswer(userAnswer) {
     const {questions, step} = this.props;
 
     this.props.onUserAnswer(questions[step], userAnswer);
+  }
+
+  /**
+   * @description Обработать клик по кнопке старт
+   * @author Paul "Bargamut" Petrov
+   * @date 2019-05-25
+   * @memberof App
+   */
+  _handleClickStart() {
+    this.props.onClickStartBtn();
   }
 }
 
@@ -120,6 +131,7 @@ App.propTypes = {
   questions: PropTypes.array.isRequired,
   step: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
+  onClickStartBtn: PropTypes.func.isRequired,
   onUserAnswer: PropTypes.func.isRequired
 };
 
@@ -131,9 +143,14 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  onClickStartBtn: () => {
+    dispatch(ActionCreators[`INCREMENT_STEP`]());
+  },
   onUserAnswer: (question, userAnswer) => {
-    dispatch(ActionCreators[`INCREMENT_STEP`](question, userAnswer));
-  }
+    dispatch(ActionCreators[`INCREMENT_MISTAKE`](question, userAnswer));
+    dispatch(ActionCreators[`INCREMENT_STEP`]());
+  },
+
 });
 
 export {App};
