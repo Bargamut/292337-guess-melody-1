@@ -77,6 +77,8 @@ class App extends Component {
    * @memberof App
    */
   _getScreen(question) {
+    const {step} = this.props;
+
     if (!question) {
       const {
         time: gameTime,
@@ -93,13 +95,13 @@ class App extends Component {
     switch (question.type) {
       case `genre`:
         return <GenreQuestionScreen
-          key={`genre-question-screen-${question}`}
+          key={`genre-question-screen-${step}`}
           question={question}
           onAnswer={this._handleClickAnswer}
         />;
       case `artist`:
         return <ArtistQuestionScreen
-          key={`article-question-screen-${question}`}
+          key={`article-question-screen-${step}`}
           question={question}
           onAnswer={this._handleClickAnswer}
         />;
