@@ -29,8 +29,18 @@ class App extends Component {
   }
 
   render() {
-    const {questions, step, mistakes} = this.props;
+    const {
+      questions,
+      step,
+      mistakes,
+      errorCount,
+      onResetGame
+    } = this.props;
     const question = questions[step];
+
+    if (mistakes >= errorCount) {
+      onResetGame();
+    }
 
     return (
       <section className={`game ${question ? Type[question.type.toUpperCase()] : ``}`}>
@@ -129,7 +139,8 @@ App.propTypes = {
   step: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
   onClickStartBtn: PropTypes.func.isRequired,
-  onUserAnswer: PropTypes.func.isRequired
+  onUserAnswer: PropTypes.func.isRequired,
+  onResetGame: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -147,7 +158,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreators[`INCREMENT_MISTAKE`](question, userAnswer));
     dispatch(ActionCreators[`INCREMENT_STEP`]());
   },
-
+  onResetGame: () => {
+    dispatch(ActionCreators[`RESET_STATE`]());
+  }
 });
 
 export {App};

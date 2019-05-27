@@ -63,6 +63,7 @@ it(`App correctly renders with Welcome Screen`, () => {
       mistakes={0}
       onClickStartBtn={jest.fn()}
       onUserAnswer={jest.fn()}
+      onResetGame={jest.fn()}
     />,
     {
       createNodeMock: (element) => {
@@ -92,6 +93,7 @@ it(`App correctly renders with Genre Question Screen`, () => {
       mistakes={0}
       onClickStartBtn={jest.fn()}
       onUserAnswer={jest.fn()}
+      onResetGame={jest.fn()}
     />,
     {
       createNodeMock: (element) => {
@@ -121,6 +123,7 @@ it(`App correctly renders with Artist Question Screen`, () => {
       mistakes={0}
       onClickStartBtn={jest.fn()}
       onUserAnswer={jest.fn()}
+      onResetGame={jest.fn()}
     />,
     {
       createNodeMock: (element) => {

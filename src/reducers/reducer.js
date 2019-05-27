@@ -46,20 +46,21 @@ const ActionCreators = {
 };
 
 const reducer = (state = initialState, action) => {
-  const updatedState = state;
+  const updatedState = {};
 
   switch (action.type) {
     case `INCREMENT_STEP`:
-      Object.assign(updatedState, {
+      Object.assign(updatedState, state, {
         step: state.step + action.payload
       });
       break;
     case `INCREMENT_MISTAKE`:
-      Object.assign(updatedState, {
+      Object.assign(updatedState, state, {
         mistakes: state.mistakes + action.payload
       });
       break;
     case `RESET_STATE`: Object.assign(updatedState, initialState); break;
+    default: Object.assign(updatedState, initialState); break;
   }
 
   return updatedState;
