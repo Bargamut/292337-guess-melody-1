@@ -44,8 +44,13 @@ it(`Form does not send by submit answer`, () => {
       />
   );
 
-  const form = artistQuestionScreen.find(`form`);
-  form.simulate(`change`, {preventDefault: preventFormSending});
+  const answerInput = artistQuestionScreen.find(`#answer-0`);
+  answerInput.simulate(`change`, {preventDefault: preventFormSending});
 
   expect(handleChange).toHaveBeenCalledTimes(1);
+
+  expect(handleChange).toHaveBeenCalledWith({
+    artist: `Пелагея`,
+    photo: ``
+  });
 });

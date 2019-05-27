@@ -6,8 +6,12 @@ class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
+    const {question} = this.props;
+    const {answers} = question;
+
     this.state = {
-      activePlayerKey: null
+      activePlayerKey: null,
+      userAnswer: new Array(answers.length).fill(false)
     };
   }
 
@@ -24,7 +28,7 @@ class GenreQuestionScreen extends PureComponent {
         <form className="game__tracks" onSubmit={(evt) => {
           evt.preventDefault();
 
-          onAnswer();
+          onAnswer(this.state.userAnswer);
         }}>
           {answers.map(
               (it, i) => {
@@ -41,7 +45,16 @@ class GenreQuestionScreen extends PureComponent {
                     />
 
                     <div className="game__answer">
-                      <input className="game__input visually-hidden" type="checkbox" name="answer" value={key} id={key} />
+                      <input
+                        className="game__input visually-hidden"
+                        type="checkbox"
+                        name="answer"
+                        value={key}
+                        id={key}
+                        onChange={() => {
+                          this._handleChange(i);
+                        }}
+                      />
                       <label className="game__check" htmlFor={key}>Отметить</label>
                     </div>
                   </div>
@@ -53,6 +66,21 @@ class GenreQuestionScreen extends PureComponent {
         </form>
       </section>
     );
+  }
+
+  /**
+   * @description Обработчик смены отметки ответа
+   * @param {Number} i Индекс ответа
+   * @author Paul "Bargamut" Petrov
+   * @date 2019-05-21
+   * @memberof GenreQuestionScreen
+   */
+  _handleChange(i) {
+    const userAnswer = this.state.userAnswer.slice(0);
+
+    userAnswer[i] = !userAnswer[i];
+
+    this.setState({userAnswer});
   }
 }
 

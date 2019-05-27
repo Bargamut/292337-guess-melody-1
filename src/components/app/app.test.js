@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from "./app.jsx";
+import {App} from "./app.jsx";
 
 
 const mock = {
@@ -26,11 +26,32 @@ const mock = {
           src: ``
         }
       ]
+    },
+    {
+      type: `artist`,
+      song: {
+        artist: `Пелагея`,
+        src: ``
+      },
+      answers: [
+        {
+          artist: `Пелагея`,
+          photo: ``
+        },
+        {
+          artist: `Краснознаменная дивизия имени моей бабушки`,
+          photo: ``
+        },
+        {
+          artist: `Lorde`,
+          photo: ``
+        }
+      ]
     }
   ]
 };
 
-it(`App correctly renders after relaunch`, () => {
+it(`App correctly renders with Welcome Screen`, () => {
   const {questions} = mock;
 
   const tree = renderer
@@ -38,7 +59,83 @@ it(`App correctly renders after relaunch`, () => {
       time={0}
       errorCount={0}
       questions={questions}
-    />)
+      step={-1}
+      mistakes={0}
+      onClickStartBtn={jest.fn()}
+      onUserAnswer={jest.fn()}
+      onResetGame={jest.fn()}
+    />,
+    {
+      createNodeMock: (element) => {
+        if (element.type === `audio`) {
+          return {
+            src: ``
+          };
+        }
+
+        return null;
+      }
+    })
+    .toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+
+it(`App correctly renders with Genre Question Screen`, () => {
+  const {questions} = mock;
+
+  const tree = renderer
+    .create(<App
+      time={0}
+      errorCount={0}
+      questions={questions}
+      step={0}
+      mistakes={0}
+      onClickStartBtn={jest.fn()}
+      onUserAnswer={jest.fn()}
+      onResetGame={jest.fn()}
+    />,
+    {
+      createNodeMock: (element) => {
+        if (element.type === `audio`) {
+          return {
+            src: ``
+          };
+        }
+
+        return null;
+      }
+    })
+    .toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+
+it(`App correctly renders with Artist Question Screen`, () => {
+  const {questions} = mock;
+
+  const tree = renderer
+    .create(<App
+      time={0}
+      errorCount={0}
+      questions={questions}
+      step={1}
+      mistakes={0}
+      onClickStartBtn={jest.fn()}
+      onUserAnswer={jest.fn()}
+      onResetGame={jest.fn()}
+    />,
+    {
+      createNodeMock: (element) => {
+        if (element.type === `audio`) {
+          return {
+            src: ``
+          };
+        }
+
+        return null;
+      }
+    })
     .toJSON();
 
   expect(tree).toMatchSnapshot();

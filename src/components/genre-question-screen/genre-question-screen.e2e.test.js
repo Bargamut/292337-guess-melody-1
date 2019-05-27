@@ -27,17 +27,13 @@ const mock = {
         src: ``
       }
     ]
-  },
-  handleSubmit: jest.fn(),
-  preventFormSending: jest.fn()
+  }
 };
 
 it(`Form does not sending by submit answer`, () => {
-  const {
-    question,
-    handleSubmit,
-    preventFormSending
-  } = mock;
+  const {question} = mock;
+  const handleSubmit = jest.fn();
+  const preventFormSending = jest.fn();
 
   const genreQuestionScreen = shallow(
       <GenreQuestionScreen
@@ -51,4 +47,33 @@ it(`Form does not sending by submit answer`, () => {
 
   expect(handleSubmit).toHaveBeenCalledTimes(1);
   expect(preventFormSending).toHaveBeenCalledTimes(1);
+});
+
+it(`onAnswer callback have answers array after submit form`, () => {
+  const {question} = mock;
+  const handleSubmit = jest.fn();
+  const preventFormSending = jest.fn();
+  const expectedAnswer = [true, false, true, false];
+
+  const genreQuestionScreen = shallow(
+      <GenreQuestionScreen
+        question={question}
+        onAnswer={handleSubmit}
+      />
+  );
+
+  const form = genreQuestionScreen.find(`form`);
+  const answers = genreQuestionScreen.find(`.game__input`);
+
+  answers.at(0).simulate(`change`);
+  genreQuestionScreen.update();
+
+  answers.at(2).simulate(`change`);
+  genreQuestionScreen.update();
+
+  form.simulate(`submit`, {preventDefault: preventFormSending});
+
+  expect(handleSubmit).toHaveBeenCalledTimes(1);
+  expect(preventFormSending).toHaveBeenCalledTimes(1);
+  expect(handleSubmit).toHaveBeenCalledWith(expectedAnswer);
 });
