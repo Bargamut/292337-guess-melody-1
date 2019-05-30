@@ -32,15 +32,9 @@ class App extends Component {
     const {
       questions,
       step,
-      mistakes,
-      errorCount,
-      onResetGame
+      mistakes
     } = this.props;
     const question = questions[step];
-
-    if (mistakes >= errorCount) {
-      onResetGame();
-    }
 
     return (
       <section className={`game ${question ? Type[question.type.toUpperCase()] : ``}`}>
@@ -77,12 +71,16 @@ class App extends Component {
    * @memberof App
    */
   _getScreen(question) {
-    const {step} = this.props;
+    const {
+      step,
+      mistakes,
+      errorCount,
+      onResetGame
+    } = this.props;
 
     if (!question) {
       const {
         time: gameTime,
-        errorCount
       } = this.props;
 
       return <WelcomeScreen
@@ -90,6 +88,10 @@ class App extends Component {
         errorCount={errorCount}
         onClickStartBtn={this._handleClickStart}
       />;
+    }
+
+    if (mistakes >= errorCount) {
+      onResetGame();
     }
 
     switch (question.type) {
