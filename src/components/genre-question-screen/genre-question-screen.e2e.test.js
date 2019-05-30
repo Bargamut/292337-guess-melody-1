@@ -42,6 +42,7 @@ it(`Form does not sending by submit answer`, () => {
         onChange={jest.fn()}
         onAnswer={handleSubmit}
         userAnswer={expectedAnswer}
+        renderAnswer={jest.fn()}
       />
   );
 
@@ -64,6 +65,7 @@ it(`onAnswer callback have answers array after submit form`, () => {
         onChange={jest.fn()}
         onAnswer={handleSubmit}
         userAnswer={expectedAnswer}
+        renderAnswer={jest.fn()}
       />
   );
 

@@ -38,6 +38,7 @@ it(`Genre Question Screen renders correctly`, () => {
         onChange={jest.fn()}
         onAnswer={handleSubmit}
         userAnswer={expectedAnswer}
+        renderAnswer={jest.fn()}
       />,
       {
         createNodeMock: (element) => {

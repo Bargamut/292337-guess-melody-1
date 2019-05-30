@@ -69,7 +69,7 @@ GenreQuestionScreen.propTypes = {
     ).isRequired,
     genre: PropTypes.oneOf([`indie-rock`, `rock`, `folk-rock`]).isRequired
   }).isRequired,
-  renderPlayer: PropTypes.func.isRequired,
+  renderAnswer: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired

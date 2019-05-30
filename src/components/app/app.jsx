@@ -8,10 +8,26 @@ import GameMistakes from '../game-mistakes/game-mistakes.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
+import withTransformProps from '../../hocs/with-transform-props/with-transform-props';
 import withActivePlayer from '../../hocs/with-active-player/with-active-player';
 import withUserAnswer from '../../hocs/with-user-answer/with-user-answer';
 
-const GenreQuestionScreenWrapped = withUserAnswer(withActivePlayer(GenreQuestionScreen));
+/**
+ * @description Отождествление prop'ы компонентов
+ * @param {Object} props
+ * @return {Object} Модифицированный объект props
+ */
+const assingProps = (props) => {
+  return Object.assign({}, props, {
+    renderAnswer: props.renderPlayer
+  });
+};
+
+const GenreQuestionScreenWrapped = withUserAnswer(
+    withActivePlayer(
+        withTransformProps(assingProps)(GenreQuestionScreen)
+    )
+);
 
 const Type = {
   ARTIST: `game--artist`,
