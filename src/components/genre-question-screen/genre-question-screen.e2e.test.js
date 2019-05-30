@@ -37,7 +37,9 @@ it(`Form does not sending by submit answer`, () => {
 
   const genreQuestionScreen = shallow(
       <GenreQuestionScreen
+        activePlayerKey={null}
         question={question}
+        onPlayBtnClick={jest.fn()}
         onAnswer={handleSubmit}
       />
   );
@@ -57,7 +59,9 @@ it(`onAnswer callback have answers array after submit form`, () => {
 
   const genreQuestionScreen = shallow(
       <GenreQuestionScreen
+        activePlayerKey={null}
         question={question}
+        onPlayBtnClick={jest.fn()}
         onAnswer={handleSubmit}
       />
   );

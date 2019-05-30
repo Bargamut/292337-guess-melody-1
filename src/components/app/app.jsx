@@ -8,6 +8,10 @@ import GameMistakes from '../game-mistakes/game-mistakes.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
+import withActivePlayer from '../../hocs/with-active-player/with-active-player';
+
+const GenreQuestionScreenWrapped = withActivePlayer(GenreQuestionScreen);
+
 const Type = {
   ARTIST: `game--artist`,
   GENRE: `game--genre`
@@ -96,7 +100,7 @@ class App extends Component {
 
     switch (question.type) {
       case `genre`:
-        return <GenreQuestionScreen
+        return <GenreQuestionScreenWrapped
           key={`genre-question-screen-${step}`}
           question={question}
           onAnswer={this._handleClickAnswer}

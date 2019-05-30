@@ -10,13 +10,12 @@ class GenreQuestionScreen extends PureComponent {
     const {answers} = question;
 
     this.state = {
-      activePlayerKey: null,
       userAnswer: new Array(answers.length).fill(false)
     };
   }
 
   render() {
-    const {question, onAnswer} = this.props;
+    const {question, activePlayerKey, onPlayBtnClick, onAnswer} = this.props;
     const {
       answers,
       genre,
@@ -38,10 +37,10 @@ class GenreQuestionScreen extends PureComponent {
                   <div className="track" key={key}>
                     <AudioPlayer
                       src={it.src}
-                      isPlaying={key === this.state.activePlayerKey}
-                      onPlayBtnClick={() => this.setState({
-                        activePlayerKey: this.state.activePlayerKey === key ? null : key
-                      })}
+                      isPlaying={key === activePlayerKey}
+                      onPlayBtnClick={() => {
+                        onPlayBtnClick(key);
+                      }}
                     />
 
                     <div className="game__answer">
@@ -95,6 +94,16 @@ GenreQuestionScreen.propTypes = {
     ).isRequired,
     genre: PropTypes.oneOf([`indie-rock`, `rock`, `folk-rock`]).isRequired
   }).isRequired,
+  activePlayerKey: (props, propName, componentName) => {
+    const propValue = props[propName];
+
+    if (propValue === null || typeof propValue === `string`) {
+      return undefined;
+    }
+
+    return new Error(`${componentName} ${propName} only accepts null or string`);
+  },
+  onPlayBtnClick: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired
 };
 
