@@ -1,5 +1,8 @@
 import React, {PureComponent} from 'react';
 import AudioPlayer from '../../components/audio-player/audio-player.jsx';
+import withAudio from '../../hocs/with-audio/with-audio';
+
+const AudioPlayerWrapped = withAudio(AudioPlayer);
 
 const withActivePlayer = (Component) => {
   class WithActivePlayer extends PureComponent {
@@ -21,7 +24,7 @@ const withActivePlayer = (Component) => {
           {...this.props}
           renderPlayer={(it, key = `answer-0`) => {
             return (
-              <AudioPlayer
+              <AudioPlayerWrapped
                 src={it.src}
                 isPlaying={key === activePlayerKey}
                 onPlayBtnClick={() => {
