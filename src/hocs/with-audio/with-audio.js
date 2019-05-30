@@ -9,7 +9,6 @@ const withAudio = (Component) => {
       const {isPlaying} = props;
 
       this.state = {
-        progress: 0,
         isLoading: true,
         isPlaying
       };
@@ -43,7 +42,6 @@ const withAudio = (Component) => {
       this._audio.oncanplaythrough = () => this.setState({isLoading: false});
       this._audio.onplay = () => this.setState({isPlaying: true});
       this._audio.onpause = () => this.setState({isPlaying: false});
-      this._audio.ontimeupdate = () => this.setState({progress: this._audio.currentTime});
     }
 
     componentDidUpdate() {
