@@ -9,8 +9,9 @@ import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
 import withActivePlayer from '../../hocs/with-active-player/with-active-player';
+import withUserAnswer from '../../hocs/with-user-answer/with-user-answer';
 
-const GenreQuestionScreenWrapped = withActivePlayer(GenreQuestionScreen);
+const GenreQuestionScreenWrapped = withUserAnswer(withActivePlayer(GenreQuestionScreen));
 
 const Type = {
   ARTIST: `game--artist`,

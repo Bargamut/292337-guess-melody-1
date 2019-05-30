@@ -3,19 +3,16 @@ import PropTypes from 'prop-types';
 import AudioPlayer from '../audio-player/audio-player.jsx';
 
 class GenreQuestionScreen extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    const {question} = this.props;
-    const {answers} = question;
-
-    this.state = {
-      userAnswer: new Array(answers.length).fill(false)
-    };
-  }
-
   render() {
-    const {question, activePlayerKey, onPlayBtnClick, onAnswer} = this.props;
+    const {
+      question,
+      activePlayerKey,
+      onPlayBtnClick,
+      onChange,
+      onAnswer,
+      userAnswer
+    } = this.props;
+
     const {
       answers,
       genre,
@@ -27,7 +24,7 @@ class GenreQuestionScreen extends PureComponent {
         <form className="game__tracks" onSubmit={(evt) => {
           evt.preventDefault();
 
-          onAnswer(this.state.userAnswer);
+          onAnswer();
         }}>
           {answers.map(
               (it, i) => {
@@ -51,8 +48,9 @@ class GenreQuestionScreen extends PureComponent {
                         value={key}
                         id={key}
                         onChange={() => {
-                          this._handleChange(i);
+                          onChange(i);
                         }}
+                        checked={userAnswer[i]}
                       />
                       <label className="game__check" htmlFor={key}>Отметить</label>
                     </div>
@@ -65,21 +63,6 @@ class GenreQuestionScreen extends PureComponent {
         </form>
       </section>
     );
-  }
-
-  /**
-   * @description Обработчик смены отметки ответа
-   * @param {Number} i Индекс ответа
-   * @author Paul "Bargamut" Petrov
-   * @date 2019-05-21
-   * @memberof GenreQuestionScreen
-   */
-  _handleChange(i) {
-    const userAnswer = this.state.userAnswer.slice(0);
-
-    userAnswer[i] = !userAnswer[i];
-
-    this.setState({userAnswer});
   }
 }
 
@@ -104,7 +87,9 @@ GenreQuestionScreen.propTypes = {
     return new Error(`${componentName} ${propName} only accepts null or string`);
   },
   onPlayBtnClick: PropTypes.func.isRequired,
-  onAnswer: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onAnswer: PropTypes.func.isRequired,
+  userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired
 };
 
 export default GenreQuestionScreen;

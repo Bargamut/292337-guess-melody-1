@@ -8,7 +8,7 @@ configure({adapter: new Adapter()});
 const MockComponent = () => <div />;
 const MockComponentWrapped = withActivePlayer(MockComponent);
 
-it(`Shouldchange activePlayerKey when call onPlayBrnClick`, () => {
+it(`Should change activePlayerKey when call onPlayBrnClick`, () => {
   const wrapper = shallow(<MockComponentWrapped />);
 
   expect(wrapper.props().activePlayerKey).toBeNull();
