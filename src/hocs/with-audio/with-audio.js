@@ -16,6 +16,7 @@ const withAudio = (Component) => {
       this._audioRef = React.createRef();
 
       this._handlePlayBtnClick = this._handlePlayBtnClick.bind(this);
+      this._renderAudio = this._renderAudio.bind(this);
     }
 
     render() {
@@ -24,9 +25,7 @@ const withAudio = (Component) => {
       return (
         <Component
           {...this.props}
-          renderAudio={() => {
-            return <audio ref={this._audioRef} />;
-          }}
+          renderAudio={this._renderAudio}
           onPlayBtnClick={this._handlePlayBtnClick}
           isPlaying={isPlaying}
           isLoading={isLoading}
@@ -66,6 +65,10 @@ const withAudio = (Component) => {
       this._audio.ontimeupdate = null;
       this._audio.src = ``;
       this._audio = null;
+    }
+
+    _renderAudio() {
+      return <audio ref={this._audioRef} />;
     }
 
     _handlePlayBtnClick() {
