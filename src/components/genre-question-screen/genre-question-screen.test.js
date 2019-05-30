@@ -34,10 +34,8 @@ it(`Genre Question Screen renders correctly`, () => {
 
   const genreQuestionScreen = renderer.create(
       <GenreQuestionScreen
-        activePlayerKey={null}
         question={question}
         onChange={jest.fn()}
-        onPlayBtnClick={jest.fn()}
         onAnswer={handleSubmit}
         userAnswer={expectedAnswer}
       />,

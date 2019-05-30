@@ -1,13 +1,11 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import AudioPlayer from '../audio-player/audio-player.jsx';
 
 class GenreQuestionScreen extends PureComponent {
   render() {
     const {
       question,
-      activePlayerKey,
-      onPlayBtnClick,
+      renderAnswer,
       onChange,
       onAnswer,
       userAnswer
@@ -32,13 +30,7 @@ class GenreQuestionScreen extends PureComponent {
 
                 return (
                   <div className="track" key={key}>
-                    <AudioPlayer
-                      src={it.src}
-                      isPlaying={key === activePlayerKey}
-                      onPlayBtnClick={() => {
-                        onPlayBtnClick(key);
-                      }}
-                    />
+                    {renderAnswer(it, key)}
 
                     <div className="game__answer">
                       <input
@@ -77,16 +69,7 @@ GenreQuestionScreen.propTypes = {
     ).isRequired,
     genre: PropTypes.oneOf([`indie-rock`, `rock`, `folk-rock`]).isRequired
   }).isRequired,
-  activePlayerKey: (props, propName, componentName) => {
-    const propValue = props[propName];
-
-    if (propValue === null || typeof propValue === `string`) {
-      return undefined;
-    }
-
-    return new Error(`${componentName} ${propName} only accepts null or string`);
-  },
-  onPlayBtnClick: PropTypes.func.isRequired,
+  renderPlayer: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired
