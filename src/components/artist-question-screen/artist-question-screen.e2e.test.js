@@ -41,6 +41,7 @@ it(`Form does not send by submit answer`, () => {
       <ArtistQuestionScreen
         question={question}
         onAnswer={handleChange}
+        renderAnswer={jest.fn()}
       />
   );
 

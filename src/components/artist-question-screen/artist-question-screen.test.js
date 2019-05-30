@@ -37,6 +37,7 @@ it(`Artist Question Screen renders correctly`, () => {
       <ArtistQuestionScreen
         question={question}
         onAnswer={handleSubmit}
+        renderAnswer={jest.fn()}
       />,
       {
         createNodeMock: (element) => {

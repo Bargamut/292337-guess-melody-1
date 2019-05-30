@@ -19,7 +19,7 @@ const withActivePlayer = (Component) => {
       return (
         <Component
           {...this.props}
-          renderPlayer={(it, key) => {
+          renderPlayer={(it, key = `answer-0`) => {
             return (
               <AudioPlayer
                 src={it.src}

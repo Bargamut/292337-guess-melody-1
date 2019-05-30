@@ -28,6 +28,10 @@ const GenreQuestionScreenWrapped = withUserAnswer(
         withTransformProps(assingProps)(GenreQuestionScreen)
     )
 );
+const ArtistQuestionScreenWrapped = withActivePlayer(
+    withTransformProps(assingProps)(ArtistQuestionScreen)
+);
+
 
 const Type = {
   ARTIST: `game--artist`,
@@ -123,7 +127,7 @@ class App extends Component {
           onAnswer={this._handleClickAnswer}
         />;
       case `artist`:
-        return <ArtistQuestionScreen
+        return <ArtistQuestionScreenWrapped
           key={`article-question-screen-${step}`}
           question={question}
           onAnswer={this._handleClickAnswer}
