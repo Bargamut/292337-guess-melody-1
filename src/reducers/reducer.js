@@ -1,6 +1,9 @@
+import {questions} from './mocks/questions';
+
 const initialState = {
   mistakes: 0,
-  step: -1
+  step: -1,
+  questions: []
 };
 
 const BusinessLogic = {
@@ -14,8 +17,15 @@ const BusinessLogic = {
   }
 };
 
+const ActionTypes = {
+  INCREMENT_MISTAKE: `INCREMENT_MISTAKE`,
+  INCREMENT_STEP: `INCREMENT_STEP`,
+  LOAD_QUESTIONS: `LOAD_QUESTIONS`,
+  RESET_STATE: `RESET_STATE`
+};
+
 const ActionCreators = {
-  'INCREMENT_MISTAKE': (question, userAnswer) => {
+  incrementMistake: (question, userAnswer) => {
     let isAnswerCorrect = false;
 
     switch (question.type) {
@@ -28,19 +38,25 @@ const ActionCreators = {
     }
 
     return {
-      type: `INCREMENT_MISTAKE`,
+      type: ActionTypes.INCREMENT_MISTAKE,
       payload: !isAnswerCorrect ? 1 : 0
     };
   },
-  'INCREMENT_STEP': () => {
+  incrementStep: () => {
     return {
-      type: `INCREMENT_STEP`,
+      type: ActionTypes.INCREMENT_STEP,
       payload: 1
     };
   },
-  'RESET_STATE': () => {
+  loadQuestions: () => {
     return {
-      type: `RESET_STATE`
+      type: ActionTypes.LOAD_QUESTIONS,
+      payload: questions
+    };
+  },
+  resetState: () => {
+    return {
+      type: ActionTypes.RESET_STATE
     };
   }
 };
@@ -49,17 +65,26 @@ const reducer = (state = initialState, action) => {
   const updatedState = {};
 
   switch (action.type) {
-    case `INCREMENT_STEP`:
+    case ActionTypes.incrementStep:
       Object.assign(updatedState, state, {
         step: state.step + action.payload
       });
       break;
-    case `INCREMENT_MISTAKE`:
+
+    case ActionTypes.incrementMistake:
       Object.assign(updatedState, state, {
         mistakes: state.mistakes + action.payload
       });
       break;
-    case `RESET_STATE`: Object.assign(updatedState, initialState); break;
+
+    case ActionTypes.loadQuestions:
+      Object.assign(updatedState, state, {
+        questions: action.payload
+      });
+      break;
+
+    case ActionTypes.resetState: Object.assign(updatedState, initialState); break;
+
     default: Object.assign(updatedState, initialState); break;
   }
 
