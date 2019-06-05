@@ -34,11 +34,15 @@ it(`Form does not sending by submit answer`, () => {
   const {question} = mock;
   const handleSubmit = jest.fn();
   const preventFormSending = jest.fn();
+  const expectedAnswer = [true, false, true, false];
 
   const genreQuestionScreen = shallow(
       <GenreQuestionScreen
         question={question}
+        onChange={jest.fn()}
         onAnswer={handleSubmit}
+        userAnswer={expectedAnswer}
+        renderAnswer={jest.fn()}
       />
   );
 
@@ -58,7 +62,10 @@ it(`onAnswer callback have answers array after submit form`, () => {
   const genreQuestionScreen = shallow(
       <GenreQuestionScreen
         question={question}
+        onChange={jest.fn()}
         onAnswer={handleSubmit}
+        userAnswer={expectedAnswer}
+        renderAnswer={jest.fn()}
       />
   );
 
@@ -75,5 +82,7 @@ it(`onAnswer callback have answers array after submit form`, () => {
 
   expect(handleSubmit).toHaveBeenCalledTimes(1);
   expect(preventFormSending).toHaveBeenCalledTimes(1);
-  expect(handleSubmit).toHaveBeenCalledWith(expectedAnswer);
+  expect(answers.map((answer) => {
+    return answer.prop(`checked`);
+  })).toEqual(expectedAnswer);
 });

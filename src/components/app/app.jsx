@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreators} from '../../reducers/reducer';
 
-import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GameMistakes from '../game-mistakes/game-mistakes.jsx';
-import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
-import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
 const Type = {
   ARTIST: `game--artist`,
@@ -21,26 +17,14 @@ const Type = {
  * @return {WelcomeScreen}
  */
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this._handleClickStart = this._handleClickStart.bind(this);
-    this._handleClickAnswer = this._handleClickAnswer.bind(this);
-  }
-
   render() {
     const {
       questions,
       step,
       mistakes,
-      errorCount,
-      onResetGame
+      renderScreen
     } = this.props;
     const question = questions[step];
-
-    if (mistakes >= errorCount) {
-      onResetGame();
-    }
 
     return (
       <section className={`game ${question ? Type[question.type.toUpperCase()] : ``}`}>
@@ -63,86 +47,17 @@ class App extends Component {
           <GameMistakes mistakes={mistakes} />
         </header>
 
-        {this._getScreen(question)}
+        {renderScreen(question)}
       </section>
     );
-  }
-
-  /**
-   * @description Выбрать экран для показа
-   * @author Paul "Bargamut" Petrov
-   * @date 2019-05-11
-   * @param {Object} question
-   * @return {JSXElement}
-   * @memberof App
-   */
-  _getScreen(question) {
-    const {step} = this.props;
-
-    if (!question) {
-      const {
-        time: gameTime,
-        errorCount
-      } = this.props;
-
-      return <WelcomeScreen
-        time={gameTime}
-        errorCount={errorCount}
-        onClickStartBtn={this._handleClickStart}
-      />;
-    }
-
-    switch (question.type) {
-      case `genre`:
-        return <GenreQuestionScreen
-          key={`genre-question-screen-${step}`}
-          question={question}
-          onAnswer={this._handleClickAnswer}
-        />;
-      case `artist`:
-        return <ArtistQuestionScreen
-          key={`article-question-screen-${step}`}
-          question={question}
-          onAnswer={this._handleClickAnswer}
-        />;
-    }
-
-    return null;
-  }
-
-  /**
-   * @description Обработать клик по ответу
-   * @param {Object} userAnswer Ответ пользователя
-   * @author Paul "Bargamut" Petrov
-   * @date 2019-05-12
-   * @memberof App
-   */
-  _handleClickAnswer(userAnswer) {
-    const {questions, step} = this.props;
-
-    this.props.onUserAnswer(questions[step], userAnswer);
-  }
-
-  /**
-   * @description Обработать клик по кнопке старт
-   * @author Paul "Bargamut" Petrov
-   * @date 2019-05-25
-   * @memberof App
-   */
-  _handleClickStart() {
-    this.props.onClickStartBtn();
   }
 }
 
 App.propTypes = {
-  time: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
   step: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
-  onClickStartBtn: PropTypes.func.isRequired,
-  onUserAnswer: PropTypes.func.isRequired,
-  onResetGame: PropTypes.func.isRequired
+  renderScreen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -152,19 +67,6 @@ const mapStateToProps = (state, ownProps) => {
   });
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onClickStartBtn: () => {
-    dispatch(ActionCreators[`INCREMENT_STEP`]());
-  },
-  onUserAnswer: (question, userAnswer) => {
-    dispatch(ActionCreators[`INCREMENT_MISTAKE`](question, userAnswer));
-    dispatch(ActionCreators[`INCREMENT_STEP`]());
-  },
-  onResetGame: () => {
-    dispatch(ActionCreators[`RESET_STATE`]());
-  }
-});
-
 export {App};
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

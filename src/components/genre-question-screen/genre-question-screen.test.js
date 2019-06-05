@@ -30,11 +30,15 @@ const mock = {
 
 it(`Genre Question Screen renders correctly`, () => {
   const {question, handleSubmit} = mock;
+  const expectedAnswer = [false, false, false, false];
 
   const genreQuestionScreen = renderer.create(
       <GenreQuestionScreen
         question={question}
+        onChange={jest.fn()}
         onAnswer={handleSubmit}
+        userAnswer={expectedAnswer}
+        renderAnswer={jest.fn()}
       />,
       {
         createNodeMock: (element) => {
