@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ActionCreators} from './reducers/reducer';
+import {ActionCreators} from './reducer/user/user';
 
 export const createAPI = (dispatch) => {
   const onSuccess = (response) => {

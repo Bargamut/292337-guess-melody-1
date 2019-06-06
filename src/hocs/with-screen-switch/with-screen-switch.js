@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
-import {ActionCreators} from '../../reducers/reducer';
+import {ActionCreators} from '../../reducer/game/game';
 
 import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
 import WinScreen from '../../components/win-screen/win-screen.jsx';
@@ -158,10 +158,10 @@ const withScreenSwitch = (Component) => {
 
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
-    step: state.step,
-    mistakes: state.mistakes,
-    questions: state.questions,
-    isAuthorizationRequired: state.isAuthorizationRequired
+    step: state.game.step,
+    mistakes: state.game.mistakes,
+    questions: state.data.questions,
+    isAuthorizationRequired: state.user.isAuthorizationRequired
   });
 };
 
