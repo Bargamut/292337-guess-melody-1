@@ -153,20 +153,21 @@ const withScreenSwitch = (Component) => {
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
     step: state.step,
-    mistakes: state.mistakes
+    mistakes: state.mistakes,
+    questions: state.questions
   });
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onClickStartBtn: () => {
-    dispatch(ActionCreators[`INCREMENT_STEP`]());
+    dispatch(ActionCreators.incrementStep());
   },
   onUserAnswer: (question, userAnswer) => {
-    dispatch(ActionCreators[`INCREMENT_MISTAKE`](question, userAnswer));
-    dispatch(ActionCreators[`INCREMENT_STEP`]());
+    dispatch(ActionCreators.incrementMistake(question, userAnswer));
+    dispatch(ActionCreators.incrementStep());
   },
   onResetGame: () => {
-    dispatch(ActionCreators[`RESET_STATE`]());
+    dispatch(ActionCreators.resetState());
   }
 });
 

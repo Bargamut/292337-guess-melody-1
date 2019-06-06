@@ -86,5 +86,3 @@ export const questions = [
     ]
   }
 ];
-
-export default settings;
