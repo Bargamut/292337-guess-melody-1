@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import thunk from 'redux-thunk';
+import {compose} from 'recompose';
 
 import {createStore} from 'redux';
 import {reducer, Operation} from './reducers/reducer';

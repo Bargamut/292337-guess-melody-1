@@ -1,3 +1,5 @@
+import api from '../api';
+
 const initialState = {
   mistakes: 0,
   step: -1,
@@ -16,14 +18,11 @@ const BusinessLogic = {
   }
 };
 
-export const Operation = {
+const Operation = {
   loadQuestions: () => (dispatch) => {
-    return fetch(`https://es31-server.appspot.com/guess-melody/questions`)
+    return api.get(`/questions`)
       .then((response) => {
-        return response.json();
-      })
-      .then((questions) => {
-        dispatch(ActionCreators.loadQuestions(questions));
+        dispatch(ActionCreators.loadQuestions(response.data));
       });
   }
 };
@@ -79,30 +78,40 @@ const reducer = (state = initialState, action) => {
   const updatedState = {};
 
   switch (action.type) {
-    case ActionTypes.incrementStep:
+    case ActionTypes.INCREMENT_STEP:
       Object.assign(updatedState, state, {
         step: state.step + action.payload
       });
       break;
 
-    case ActionTypes.incrementMistake:
+    case ActionTypes.INCREMENT_MISTAKE:
       Object.assign(updatedState, state, {
         mistakes: state.mistakes + action.payload
       });
       break;
 
-    case ActionTypes.loadQuestions:
+    case ActionTypes.LOAD_QUESTIONS:
       Object.assign(updatedState, state, {
         questions: action.payload
       });
       break;
 
-    case ActionTypes.resetState: Object.assign(updatedState, initialState); break;
+    case ActionTypes.RESET_STATE:
+      Object.assign(updatedState, initialState);
+      break;
 
-    default: Object.assign(updatedState, initialState); break;
+    default:
+      Object.assign(updatedState, initialState);
+      break;
   }
 
   return updatedState;
 };
 
-export {ActionCreators, reducer};
+export {
+  Operation,
+  ActionTypes,
+  ActionCreators,
+  BusinessLogic,
+  reducer
+};
