@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import GameMistakes from '../game-mistakes/game-mistakes.jsx';
+import {getStep, getMistakes} from '../../reducer/game/selectors.js';
+import {getQuestions} from '../../reducer/data/selectors.js';
 
 const Type = {
   ARTIST: `game--artist`,
@@ -62,9 +64,9 @@ App.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
-    step: state.game.step,
-    mistakes: state.game.mistakes,
-    questions: state.data.questions
+    step: getStep(state),
+    mistakes: getMistakes(state),
+    questions: getQuestions(state)
   });
 };
 

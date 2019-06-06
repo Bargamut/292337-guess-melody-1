@@ -15,6 +15,9 @@ import ArtistQuestionScreen from '../../components/artist-question-screen/artist
 import withTransformProps from '../with-transform-props/with-transform-props';
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
+import {getStep, getMistakes} from '../../reducer/game/selectors';
+import {getQuestions} from '../../reducer/data/selectors';
+import {getISAuthorizationRequired} from '../../reducer/user/selectors';
 
 /**
  * @description Отождествление prop'ы компонентов
@@ -158,10 +161,10 @@ const withScreenSwitch = (Component) => {
 
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
-    step: state.game.step,
-    mistakes: state.game.mistakes,
-    questions: state.data.questions,
-    isAuthorizationRequired: state.user.isAuthorizationRequired
+    step: getStep(state),
+    mistakes: getMistakes(state),
+    questions: getQuestions(state),
+    isAuthorizationRequired: getISAuthorizationRequired(state)
   });
 };
 
