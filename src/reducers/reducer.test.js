@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
-import api from '../api';
+import {createAPI} from '../api';
 import {
   // ActionCreators,
   ActionTypes,
@@ -12,7 +12,8 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(undefined, {})).toEqual({
       step: -1,
       mistakes: 0,
-      questions: []
+      questions: [],
+      isAuthorizationRequired: false
     });
   });
 
@@ -20,14 +21,16 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
-      questions: []
+      questions: [],
+      isAuthorizationRequired: false
     }, {
       type: ActionTypes.INCREMENT_STEP,
       payload: 1
     })).toEqual({
       step: 0,
       mistakes: 0,
-      questions: []
+      questions: [],
+      isAuthorizationRequired: false
     });
   });
 
@@ -35,14 +38,16 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
-      questions: []
+      questions: [],
+      isAuthorizationRequired: false
     }, {
       type: ActionTypes.INCREMENT_MISTAKE,
       payload: 1
     })).toEqual({
       step: -1,
       mistakes: 1,
-      questions: []
+      questions: [],
+      isAuthorizationRequired: false
     });
   });
 
@@ -50,26 +55,29 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: 3,
       mistakes: 2,
-      questions: []
+      questions: [],
+      isAuthorizationRequired: false
     }, {
       type: ActionTypes.RESET_STATE
     })).toEqual({
       step: -1,
       mistakes: 0,
-      questions: []
+      questions: [],
+      isAuthorizationRequired: false
     });
   });
 
   it(`Should make a correct API call to /questions`, () => {
-    const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
+    const api = createAPI(dispatch);
+    const apiMock = new MockAdapter(api);
     const questionLoader = Operation.loadQuestions();
 
     apiMock
       .onGet(`/questions`)
       .reply(200, [{fake: true}]);
 
-    return questionLoader(dispatch)
+    return questionLoader(dispatch, jest.fn(), api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {

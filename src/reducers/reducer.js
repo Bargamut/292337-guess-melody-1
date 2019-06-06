@@ -1,9 +1,8 @@
-import api from '../api';
-
 const initialState = {
   mistakes: 0,
   step: -1,
-  questions: []
+  questions: [],
+  isAuthorizationRequired: false
 };
 
 const BusinessLogic = {
@@ -19,7 +18,7 @@ const BusinessLogic = {
 };
 
 const Operation = {
-  loadQuestions: () => (dispatch) => {
+  loadQuestions: () => (dispatch, _getState, api) => {
     return api.get(`/questions`)
       .then((response) => {
         dispatch(ActionCreators.loadQuestions(response.data));
@@ -31,6 +30,7 @@ const ActionTypes = {
   INCREMENT_MISTAKE: `INCREMENT_MISTAKE`,
   INCREMENT_STEP: `INCREMENT_STEP`,
   LOAD_QUESTIONS: `LOAD_QUESTIONS`,
+  REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   RESET_STATE: `RESET_STATE`
 };
 
@@ -67,6 +67,13 @@ const ActionCreators = {
     };
   },
 
+  requiredAuthorization: (status) => {
+    return {
+      type: ActionTypes.REQUIRED_AUTHORIZATION,
+      payload: status
+    };
+  },
+
   resetState: () => {
     return {
       type: ActionTypes.RESET_STATE
@@ -93,6 +100,12 @@ const reducer = (state = initialState, action) => {
     case ActionTypes.LOAD_QUESTIONS:
       Object.assign(updatedState, state, {
         questions: action.payload
+      });
+      break;
+
+    case ActionTypes.REQUIRED_AUTHORIZATION:
+      Object.assign(updatedState, state, {
+        isAuthorizationRequired: action.payload
       });
       break;
 
