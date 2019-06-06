@@ -8,8 +8,6 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(undefined, {})).toEqual({
       step: -1,
       mistakes: 0,
-      questions: [],
-      isAuthorizationRequired: false
     });
   });
 
@@ -17,16 +15,12 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
-      questions: [],
-      isAuthorizationRequired: false
     }, {
       type: ActionTypes.INCREMENT_STEP,
       payload: 1
     })).toEqual({
       step: 0,
       mistakes: 0,
-      questions: [],
-      isAuthorizationRequired: false
     });
   });
 
@@ -34,16 +28,12 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
-      questions: [],
-      isAuthorizationRequired: false
     }, {
       type: ActionTypes.INCREMENT_MISTAKE,
       payload: 1
     })).toEqual({
       step: -1,
       mistakes: 1,
-      questions: [],
-      isAuthorizationRequired: false
     });
   });
 
@@ -51,15 +41,11 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: 3,
       mistakes: 2,
-      questions: [],
-      isAuthorizationRequired: false
     }, {
       type: ActionTypes.RESET_STATE
     })).toEqual({
       step: -1,
       mistakes: 0,
-      questions: [],
-      isAuthorizationRequired: false
     });
   });
 });

@@ -4,7 +4,8 @@ import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
 import {createStore, applyMiddleware} from 'redux';
-import {reducer, Operation} from './reducer/game/game';
+import reducer from './reducer';
+import {Operation} from './reducer/data/data';
 import {Provider} from 'react-redux';
 import {createAPI} from './api';
 
