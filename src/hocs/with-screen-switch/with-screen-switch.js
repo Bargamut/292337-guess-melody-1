@@ -7,6 +7,7 @@ import {ActionCreators} from '../../reducers/reducer';
 import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
 import WinScreen from '../../components/win-screen/win-screen.jsx';
 import GameOverScreen from '../../components/game-over-screen/game-over-screen.jsx';
+import AuthorizationScreen from '../../components/authorization-screen/authorization-screen.jsx';
 
 import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.jsx';
@@ -63,6 +64,10 @@ const withScreenSwitch = (Component) => {
      * @memberof App
      */
     _getScreen(question) {
+      if (this.props.isAuthorizationRequired) {
+        return <AuthorizationScreen />;
+      }
+
       const {
         step,
         mistakes,
@@ -144,7 +149,8 @@ const withScreenSwitch = (Component) => {
     mistakes: PropTypes.number.isRequired,
     onClickStartBtn: PropTypes.func.isRequired,
     onUserAnswer: PropTypes.func.isRequired,
-    onResetGame: PropTypes.func.isRequired
+    onResetGame: PropTypes.func.isRequired,
+    isAuthorizationRequired: PropTypes.bool.isRequired
   };
 
   return WithScreenSwitch;
@@ -154,7 +160,8 @@ const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
     step: state.step,
     mistakes: state.mistakes,
-    questions: state.questions
+    questions: state.questions,
+    isAuthorizationRequired: state.isAuthorizationRequired
   });
 };
 
