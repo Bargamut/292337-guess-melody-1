@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {createStore} from 'redux';
-import {reducer, ActionCreators} from './reducers/reducer';
+import {reducer, Operation} from './reducers/reducer';
 import {Provider} from 'react-redux';
 
 import App from './components/app/app.jsx';
@@ -21,7 +21,7 @@ const store = createStore(
 const AppWrapped = withScreenSwitch(App);
 
 const init = (gameSettings) => {
-  store.dispatch(ActionCreators.loadQuestions());
+  store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(
       <Provider store={store}>
