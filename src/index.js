@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {reducer, Operation} from './reducers/reducer';
 import {Provider} from 'react-redux';
 
@@ -17,7 +17,10 @@ const settings = {
 
 const store = createStore(
     reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    compose(
+        applyMiddleware(thunk),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
 );
 
 const AppWrapped = withScreenSwitch(App);
