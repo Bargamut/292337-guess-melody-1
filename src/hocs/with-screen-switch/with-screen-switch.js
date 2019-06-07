@@ -2,11 +2,15 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
-import {ActionCreators} from '../../reducers/reducer';
+import {ActionCreator} from '../../reducer/game/game';
+import {getStep, getMistakes} from '../../reducer/game/selectors';
+import {getQuestions} from '../../reducer/data/selectors';
+import {getAuthorizationStatus} from '../../reducer/user/selectors';
 
 import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
 import WinScreen from '../../components/win-screen/win-screen.jsx';
 import GameOverScreen from '../../components/game-over-screen/game-over-screen.jsx';
+import AuthorizationScreen from '../../components/authorization-screen/authorization-screen.jsx';
 
 import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.jsx';
@@ -63,6 +67,10 @@ const withScreenSwitch = (Component) => {
      * @memberof App
      */
     _getScreen(question) {
+      if (this.props.isAuthorizationRequired) {
+        return <AuthorizationScreen />;
+      }
+
       const {
         step,
         mistakes,
@@ -74,6 +82,9 @@ const withScreenSwitch = (Component) => {
         const {
           questions
         } = this.props;
+
+        // eslint-disable-next-line no-console
+        console.log(step, questions);
 
         if (step > questions.length - 1) {
           return <WinScreen onReplayBtnClick={onResetGame} />;
@@ -144,7 +155,8 @@ const withScreenSwitch = (Component) => {
     mistakes: PropTypes.number.isRequired,
     onClickStartBtn: PropTypes.func.isRequired,
     onUserAnswer: PropTypes.func.isRequired,
-    onResetGame: PropTypes.func.isRequired
+    onResetGame: PropTypes.func.isRequired,
+    isAuthorizationRequired: PropTypes.bool.isRequired
   };
 
   return WithScreenSwitch;
@@ -152,21 +164,23 @@ const withScreenSwitch = (Component) => {
 
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
-    step: state.step,
-    mistakes: state.mistakes
+    step: getStep(state),
+    mistakes: getMistakes(state),
+    questions: getQuestions(state),
+    isAuthorizationRequired: getAuthorizationStatus(state)
   });
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onClickStartBtn: () => {
-    dispatch(ActionCreators[`INCREMENT_STEP`]());
+    dispatch(ActionCreator.incrementStep());
   },
   onUserAnswer: (question, userAnswer) => {
-    dispatch(ActionCreators[`INCREMENT_MISTAKE`](question, userAnswer));
-    dispatch(ActionCreators[`INCREMENT_STEP`]());
+    dispatch(ActionCreator.incrementMistake(question, userAnswer));
+    dispatch(ActionCreator.incrementStep());
   },
   onResetGame: () => {
-    dispatch(ActionCreators[`RESET_STATE`]());
+    dispatch(ActionCreator.resetState());
   }
 });
 

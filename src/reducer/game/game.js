@@ -1,6 +1,12 @@
 const initialState = {
-  mistakes: 0,
-  step: -1
+  step: -1,
+  mistakes: 0
+};
+
+const ActionType = {
+  INCREMENT_MISTAKE: `INCREMENT_MISTAKE`,
+  INCREMENT_STEP: `INCREMENT_STEP`,
+  RESET_STATE: `RESET_STATE`
 };
 
 const BusinessLogic = {
@@ -9,13 +15,19 @@ const BusinessLogic = {
       answer === (question.genre === question.answers[i].genre))
     );
   },
+
   isArtistAnswerCorrect: (userAnswer, question) => {
     return userAnswer.artist === question.song.artist;
   }
 };
 
-const ActionCreators = {
-  'INCREMENT_MISTAKE': (question, userAnswer) => {
+const ActionCreator = {
+  incrementStep: () => ({
+    type: ActionType.INCREMENT_STEP,
+    payload: 1
+  }),
+
+  incrementMistake: (question, userAnswer) => {
     let isAnswerCorrect = false;
 
     switch (question.type) {
@@ -28,42 +40,40 @@ const ActionCreators = {
     }
 
     return {
-      type: `INCREMENT_MISTAKE`,
+      type: ActionType.INCREMENT_MISTAKE,
       payload: !isAnswerCorrect ? 1 : 0
     };
   },
-  'INCREMENT_STEP': () => {
+
+  resetState: () => {
     return {
-      type: `INCREMENT_STEP`,
-      payload: 1
-    };
-  },
-  'RESET_STATE': () => {
-    return {
-      type: `RESET_STATE`
+      type: ActionType.RESET_STATE
     };
   }
 };
 
 const reducer = (state = initialState, action) => {
-  const updatedState = {};
-
   switch (action.type) {
-    case `INCREMENT_STEP`:
-      Object.assign(updatedState, state, {
+    case ActionType.INCREMENT_STEP:
+      return Object.assign({}, state, {
         step: state.step + action.payload
       });
-      break;
-    case `INCREMENT_MISTAKE`:
-      Object.assign(updatedState, state, {
+
+    case ActionType.INCREMENT_MISTAKE:
+      return Object.assign({}, state, {
         mistakes: state.mistakes + action.payload
       });
-      break;
-    case `RESET_STATE`: Object.assign(updatedState, initialState); break;
-    default: Object.assign(updatedState, initialState); break;
+
+    case ActionType.RESET_STATE:
+      return Object.assign({}, initialState);
   }
 
-  return updatedState;
+  return state;
 };
 
-export {ActionCreators, reducer};
+export {
+  ActionType,
+  ActionCreator,
+  BusinessLogic,
+  reducer
+};
