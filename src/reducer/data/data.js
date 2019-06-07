@@ -2,49 +2,42 @@ const initialState = {
   questions: []
 };
 
-const Operation = {
-  loadQuestions: () => (dispatch, _getState, api) => {
-    return api.get(`/questions`)
-      .then((response) => {
-        dispatch(ActionCreators.loadQuestions(response.data));
-      });
-  }
-};
-
-const ActionTypes = {
+const ActionType = {
   LOAD_QUESTIONS: `LOAD_QUESTIONS`,
 };
 
-const ActionCreators = {
+const ActionCreator = {
   loadQuestions: (questions) => {
     return {
-      type: ActionTypes.LOAD_QUESTIONS,
+      type: ActionType.LOAD_QUESTIONS,
       payload: questions
     };
   }
 };
 
-const reducer = (state = initialState, action) => {
-  const updatedState = {};
+const Operation = {
+  loadQuestions: () => (dispatch, _getState, api) => {
+    return api.get(`/questions`)
+      .then((response) => {
+        dispatch(ActionCreator.loadQuestions(response.data));
+      });
+  }
+};
 
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.LOAD_QUESTIONS:
-      Object.assign(updatedState, state, {
+    case ActionType.LOAD_QUESTIONS:
+      return Object.assign({}, state, {
         questions: action.payload
       });
-      break;
-
-    default:
-      Object.assign(updatedState, initialState);
-      break;
   }
 
-  return updatedState;
+  return state;
 };
 
 export {
+  ActionType,
+  ActionCreator,
   Operation,
-  ActionTypes,
-  ActionCreators,
   reducer
 };

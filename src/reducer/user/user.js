@@ -2,39 +2,32 @@ const initialState = {
   isAuthorizationRequired: false
 };
 
-const ActionTypes = {
+const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`
 };
 
-const ActionCreators = {
-  requiredAuthorization: (status) => {
+const ActionCreator = {
+  requireAuthorization: (status) => {
     return {
-      type: ActionTypes.REQUIRED_AUTHORIZATION,
+      type: ActionType.REQUIRED_AUTHORIZATION,
       payload: status
     };
   }
 };
 
 const reducer = (state = initialState, action) => {
-  const updatedState = {};
-
   switch (action.type) {
-    case ActionTypes.REQUIRED_AUTHORIZATION:
-      Object.assign(updatedState, state, {
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return Object.assign({}, state, {
         isAuthorizationRequired: action.payload
       });
-      break;
-
-    default:
-      Object.assign(updatedState, initialState);
-      break;
   }
 
-  return updatedState;
+  return state;
 };
 
 export {
-  ActionTypes,
-  ActionCreators,
+  ActionType,
+  ActionCreator,
   reducer
 };

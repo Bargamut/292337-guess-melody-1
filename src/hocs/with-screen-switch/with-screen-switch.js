@@ -2,7 +2,10 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
-import {ActionCreators} from '../../reducer/game/game';
+import {ActionCreator} from '../../reducer/game/game';
+import {getStep, getMistakes} from '../../reducer/game/selectors';
+import {getQuestions} from '../../reducer/data/selectors';
+import {getAuthorizationStatus} from '../../reducer/user/selectors';
 
 import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
 import WinScreen from '../../components/win-screen/win-screen.jsx';
@@ -15,9 +18,6 @@ import ArtistQuestionScreen from '../../components/artist-question-screen/artist
 import withTransformProps from '../with-transform-props/with-transform-props';
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
-import {getStep, getMistakes} from '../../reducer/game/selectors';
-import {getQuestions} from '../../reducer/data/selectors';
-import {getIsAuthorizationRequired} from '../../reducer/user/selectors';
 
 /**
  * @description Отождествление prop'ы компонентов
@@ -82,6 +82,9 @@ const withScreenSwitch = (Component) => {
         const {
           questions
         } = this.props;
+
+        // eslint-disable-next-line no-console
+        console.log(step, questions);
 
         if (step > questions.length - 1) {
           return <WinScreen onReplayBtnClick={onResetGame} />;
@@ -164,20 +167,20 @@ const mapStateToProps = (state, ownProps) => {
     step: getStep(state),
     mistakes: getMistakes(state),
     questions: getQuestions(state),
-    isAuthorizationRequired: getIsAuthorizationRequired(state)
+    isAuthorizationRequired: getAuthorizationStatus(state)
   });
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onClickStartBtn: () => {
-    dispatch(ActionCreators.incrementStep());
+    dispatch(ActionCreator.incrementStep());
   },
   onUserAnswer: (question, userAnswer) => {
-    dispatch(ActionCreators.incrementMistake(question, userAnswer));
-    dispatch(ActionCreators.incrementStep());
+    dispatch(ActionCreator.incrementMistake(question, userAnswer));
+    dispatch(ActionCreator.incrementStep());
   },
   onResetGame: () => {
-    dispatch(ActionCreators.resetState());
+    dispatch(ActionCreator.resetState());
   }
 });
 

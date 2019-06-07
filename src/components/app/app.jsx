@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import GameMistakes from '../game-mistakes/game-mistakes.jsx';
-import {getStep, getMistakes} from '../../reducer/game/selectors.js';
-import {getQuestions} from '../../reducer/data/selectors.js';
+import {getStep, getMistakes} from '../../reducer/game/selectors';
+import {getQuestions} from '../../reducer/data/selectors';
 
 const Type = {
   ARTIST: `game--artist`,

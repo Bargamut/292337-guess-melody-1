@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../api';
 import {
-  ActionTypes,
+  ActionType,
   Operation
 } from './data';
 
@@ -20,7 +20,7 @@ describe(`Reducer works correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionTypes.LOAD_QUESTIONS,
+          type: ActionType.LOAD_QUESTIONS,
           payload: [{fake: true}]
         });
       });

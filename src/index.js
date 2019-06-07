@@ -17,21 +17,21 @@ const settings = {
   errorCount: 3
 };
 
-const api = createAPI((...args) => {
-  return store.dispatch(...args);
-});
-
-const store = createStore(
-    reducer,
-    compose(
-        applyMiddleware(thunk.withExtraArgument(api)),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
-);
-
 const AppWrapped = withScreenSwitch(App);
 
 const init = (gameSettings) => {
+  const api = createAPI((...args) => {
+    return store.dispatch(...args);
+  });
+
+  const store = createStore(
+      reducer,
+      compose(
+          applyMiddleware(thunk.withExtraArgument(api)),
+          window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
+  );
+
   store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(

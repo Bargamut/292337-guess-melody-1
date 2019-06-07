@@ -1,6 +1,12 @@
 const initialState = {
-  mistakes: 0,
-  step: -1
+  step: -1,
+  mistakes: 0
+};
+
+const ActionType = {
+  INCREMENT_MISTAKE: `INCREMENT_MISTAKE`,
+  INCREMENT_STEP: `INCREMENT_STEP`,
+  RESET_STATE: `RESET_STATE`
 };
 
 const BusinessLogic = {
@@ -15,13 +21,12 @@ const BusinessLogic = {
   }
 };
 
-const ActionTypes = {
-  INCREMENT_MISTAKE: `INCREMENT_MISTAKE`,
-  INCREMENT_STEP: `INCREMENT_STEP`,
-  RESET_STATE: `RESET_STATE`
-};
+const ActionCreator = {
+  incrementStep: () => ({
+    type: ActionType.INCREMENT_STEP,
+    payload: 1
+  }),
 
-const ActionCreators = {
   incrementMistake: (question, userAnswer) => {
     let isAnswerCorrect = false;
 
@@ -35,56 +40,40 @@ const ActionCreators = {
     }
 
     return {
-      type: ActionTypes.INCREMENT_MISTAKE,
+      type: ActionType.INCREMENT_MISTAKE,
       payload: !isAnswerCorrect ? 1 : 0
-    };
-  },
-
-  incrementStep: () => {
-    return {
-      type: ActionTypes.INCREMENT_STEP,
-      payload: 1
     };
   },
 
   resetState: () => {
     return {
-      type: ActionTypes.RESET_STATE
+      type: ActionType.RESET_STATE
     };
   }
 };
 
 const reducer = (state = initialState, action) => {
-  const updatedState = {};
-
   switch (action.type) {
-    case ActionTypes.INCREMENT_STEP:
-      Object.assign(updatedState, state, {
+    case ActionType.INCREMENT_STEP:
+      return Object.assign({}, state, {
         step: state.step + action.payload
       });
-      break;
 
-    case ActionTypes.INCREMENT_MISTAKE:
-      Object.assign(updatedState, state, {
+    case ActionType.INCREMENT_MISTAKE:
+      return Object.assign({}, state, {
         mistakes: state.mistakes + action.payload
       });
-      break;
 
-    case ActionTypes.RESET_STATE:
-      Object.assign(updatedState, initialState);
-      break;
-
-    default:
-      Object.assign(updatedState, initialState);
-      break;
+    case ActionType.RESET_STATE:
+      return Object.assign({}, initialState);
   }
 
-  return updatedState;
+  return state;
 };
 
 export {
-  ActionTypes,
-  ActionCreators,
+  ActionType,
+  ActionCreator,
   BusinessLogic,
   reducer
 };
