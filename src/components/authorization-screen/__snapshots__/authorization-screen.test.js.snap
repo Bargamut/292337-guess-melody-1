@@ -30,8 +30,9 @@ exports[`Authorization Screen renders correctly 1`] = `
     Хотите сравнить свой результат с предыдущими попытками? Представтесь!
   </p>
   <form
-    action=""
+    action="#"
     className="login__form"
+    onSubmit={[MockFunction]}
   >
     <p
       className="login__field"
@@ -46,6 +47,7 @@ exports[`Authorization Screen renders correctly 1`] = `
         className="login__input"
         id="name"
         name="name"
+        onChange={[Function]}
         type="text"
       />
     </p>
@@ -62,6 +64,7 @@ exports[`Authorization Screen renders correctly 1`] = `
         className="login__input"
         id="password"
         name="password"
+        onChange={[Function]}
         type="text"
       />
       <span
@@ -72,6 +75,7 @@ exports[`Authorization Screen renders correctly 1`] = `
     </p>
     <button
       className="login__button button"
+      disabled={true}
       type="submit"
     >
       Войти
@@ -79,6 +83,7 @@ exports[`Authorization Screen renders correctly 1`] = `
   </form>
   <button
     className="replay"
+    onClick={[MockFunction]}
     type="button"
   >
     Сыграть ещё раз

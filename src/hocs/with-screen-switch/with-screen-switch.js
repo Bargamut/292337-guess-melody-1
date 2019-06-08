@@ -15,6 +15,7 @@ import AuthorizationScreen from '../../components/authorization-screen/authoriza
 import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.jsx';
 
+import withAuthorization from '../with-authorization/with-authorization';
 import withTransformProps from '../with-transform-props/with-transform-props';
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
@@ -30,6 +31,7 @@ const assingProps = (props) => {
   });
 };
 
+const AuthorizationScreenWrapped = withAuthorization(AuthorizationScreen);
 const GenreQuestionScreenWrapped = withUserAnswer(
     withActivePlayer(
         withTransformProps(assingProps)(GenreQuestionScreen)
@@ -67,10 +69,6 @@ const withScreenSwitch = (Component) => {
      * @memberof App
      */
     _getScreen(question) {
-      if (this.props.isAuthorizationRequired) {
-        return <AuthorizationScreen />;
-      }
-
       const {
         step,
         mistakes,
@@ -78,13 +76,16 @@ const withScreenSwitch = (Component) => {
         onResetGame
       } = this.props;
 
+      if (this.props.isAuthorizationRequired) {
+        return <AuthorizationScreenWrapped
+          onReplayBtnClick={onResetGame}
+        />;
+      }
+
       if (!question) {
         const {
           questions
         } = this.props;
-
-        // eslint-disable-next-line no-console
-        console.log(step, questions);
 
         if (step > questions.length - 1) {
           return <WinScreen onReplayBtnClick={onResetGame} />;
