@@ -7,7 +7,7 @@ export const createAPI = (dispatch) => {
   };
 
   const onFail = (err) => {
-    if (err.response.status === 403) {
+    if ([400, 403].indexOf(err.response.status) > -1) {
       dispatch(ActionCreator.requireAuthorization(true));
     }
 
