@@ -12,6 +12,7 @@ import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
 import WinScreen from '../../components/win-screen/win-screen.jsx';
 import GameOverScreen from '../../components/game-over-screen/game-over-screen.jsx';
 import AuthorizationScreen from '../../components/authorization-screen/authorization-screen.jsx';
+import ResultsSuccessScreen from '../../components/results-success-screen/results-success-screen.jsx';
 
 import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.jsx';
@@ -53,11 +54,29 @@ const withScreenSwitch = (Component) => {
     }
 
     render() {
+      const {onResetGame} = this.props;
+
       return (
-        <Component
-          {...this.props}
-          renderScreen={this._getScreen}
-        />
+        <Switch>
+          <Route path="/login" render={() => (
+            <AuthorizationScreenWrapped
+              onReplayBtnClick={onResetGame}
+            />
+          )} />
+
+          <Route path="/results" render={() => (
+            <ResultsSuccessScreen
+              onReplayBtnClick={onResetGame}
+            />
+          )} />
+
+          <Route path="/" exact render={() => (
+            <Component
+              {...this.props}
+              renderScreen={this._getScreen}
+            />
+          )}/>
+        </Switch>
       );
     }
 
@@ -76,12 +95,6 @@ const withScreenSwitch = (Component) => {
         errorCount,
         onResetGame
       } = this.props;
-
-      if (this.props.isAuthorizationRequired) {
-        return <AuthorizationScreenWrapped
-          onReplayBtnClick={onResetGame}
-        />;
-      }
 
       if (!question) {
         const {

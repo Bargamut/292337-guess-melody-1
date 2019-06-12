@@ -44,7 +44,7 @@ const withAuthorization = (Component) => {
   }
 
   WithAuthorization.propTypes = {
-    onReplaybtnClick: PropTypes.func,
+    onReplayBtnClick: PropTypes.func,
     login: PropTypes.func
   };
 
@@ -55,6 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
   login: (form) => {
     createAPI(dispatch)
       .post(`/login`, form)
+      .catch(() => {
+        dispatch(ActionCreator.requireAuthorization(true));
+      })
       .then((response) => {
         if (response.data) {
           dispatch(ActionCreator.login(response.data));
