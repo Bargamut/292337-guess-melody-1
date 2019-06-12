@@ -26,6 +26,7 @@ class GenreQuestionScreen extends PureComponent {
         }}>
           {answers.map(
           // CHECK: я бы вынес то что рендеришь в компоненту отдельно
+          // TODO
               (it, i) => {
                 const key = `answer-${i}`;
 

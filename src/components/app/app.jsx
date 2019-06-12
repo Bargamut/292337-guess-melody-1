@@ -71,6 +71,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 // CHECK: зачем это?
+// BARGAMUT: Для экспорта в snapshot-тест
+// по материалам лекции
 export {App};
 
 export default connect(mapStateToProps)(App);

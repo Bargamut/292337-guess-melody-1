@@ -56,6 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     createAPI(dispatch)
       .post(`/login`, form)
       .then((response) => { // CHECK: стоит ловить ошибку
+        // TODO: проверить почему не срабатывает .catch()
         if (response.data) {
           dispatch(ActionCreator.login(response.data));
           dispatch(ActionCreator.requireAuthorization(false));
