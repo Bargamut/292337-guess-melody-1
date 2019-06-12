@@ -37,10 +37,12 @@ const init = (gameSettings) => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <AppWrapped
-          time={gameSettings.gameTime}
-          errorCount={gameSettings.errorCount}
-        />
+        <BrowserRouter>
+          <AppWrapped
+            time={gameSettings.gameTime}
+            errorCount={gameSettings.errorCount}
+          />
+        </BrowserRouter>
       </Provider>,
       document.querySelector(`.main`)
   );
