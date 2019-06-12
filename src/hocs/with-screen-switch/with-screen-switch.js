@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
+import {Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {ActionCreator} from '../../reducer/game/game';
