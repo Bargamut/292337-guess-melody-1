@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 import {compose} from 'recompose';
+import history from './history';
 
 import {BrowserRouter} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
@@ -21,15 +22,13 @@ const settings = {
 const AppWrapped = withScreenSwitch(App);
 
 const init = (gameSettings) => {
-  const api = createAPI((...args) => {
-    return store.dispatch(...args);
-  });
+  const api = createAPI(() => history.push(`/login`));
 
   const store = createStore(
       reducer,
       compose(
           applyMiddleware(thunk.withExtraArgument(api)),
-          window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+          window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (a) => a
       )
   );
 
@@ -37,7 +36,7 @@ const init = (gameSettings) => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter history={history}>
           <AppWrapped
             time={gameSettings.gameTime}
             errorCount={gameSettings.errorCount}
