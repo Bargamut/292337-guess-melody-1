@@ -8,7 +8,8 @@ class AudioPlayer extends PureComponent {
 
   render() {
     const {renderAudio, onPlayBtnClick, isLoading, isPlaying} = this.props;
-
+    // CHECK: вместо renderAudio() можно просто делать там {this.props.children}
+    // и передавать внутрь то что надо рендерить сразу, а не прокидывать и вызывать
     return (
       <React.Fragment>
         <button

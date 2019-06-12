@@ -20,6 +20,10 @@ import withTransformProps from '../with-transform-props/with-transform-props';
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
 
+// CHECK: вот эта компонента очень сложная, очень много импортов, потом они оборачиваются
+// в другие импорты, потом участвуют в логике, где внутри ещё есть логика
+// я бы подумал как это можно зарефакторить
+
 /**
  * @description Отождествление prop'ы компонентов
  * @param {Object} props

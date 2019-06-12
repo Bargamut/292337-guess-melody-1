@@ -70,6 +70,7 @@ const mapStateToProps = (state, ownProps) => {
   });
 };
 
+// CHECK: зачем это?
 export {App};
 
 export default connect(mapStateToProps)(App);
