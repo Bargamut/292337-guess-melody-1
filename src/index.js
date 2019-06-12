@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
-import BrowserRouter from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
 import reducer from './reducer/reducer';
 import {Operation} from './reducer/data/data';
