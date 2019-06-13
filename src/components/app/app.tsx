@@ -1,15 +1,45 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import {connect} from 'react-redux';
 
-import GameMistakes from '../game-mistakes/game-mistakes.jsx';
+import GameMistakes from '../game-mistakes/game-mistakes';
 import {getStep, getMistakes} from '../../reducer/game/selectors';
 import {getQuestions} from '../../reducer/data/selectors';
+import { type } from 'os';
 
-const Type = {
-  ARTIST: `game--artist`,
-  GENRE: `game--genre`
-};
+enum Type {
+  ARTIST = 'artist',
+  GENRE = 'genre'
+}
+
+interface QuestonArtist {
+  answers: {
+    artist: string,
+    picture: string
+  }[],
+  song: {
+    artist: string,
+    src: string
+  },
+  type: Type
+}
+
+interface QuestonGenre {
+  answers: {
+    artist: string,
+    picture: string
+  }[],
+  genre: string,
+  type: Type
+}
+
+type Question = QuestonArtist | QuestonGenre;
+
+interface Props {
+  questions: Question[],
+  step: number,
+  mistakes: number,
+  renderScreen: (question: Question) => React.ReactElement
+}
 
 /**
  * @description Компонент приложения
@@ -18,7 +48,7 @@ const Type = {
  * @param {Number} props.errorCount допустимое количество ошибок
  * @return {WelcomeScreen}
  */
-class App extends Component {
+class App extends React.Component<Props, null> {
   render() {
     const {
       questions,
@@ -29,7 +59,7 @@ class App extends Component {
     const question = questions[step];
 
     return (
-      <section className={`game ${question ? Type[question.type.toUpperCase()] : ``}`}>
+      <section className={`game ${question ? `game--${Type[question.type.toUpperCase()]}` : ``}`}>
         <header className="game__header">
           <a className="game__back" href="#">
             <span className="visually-hidden">Сыграть ещё раз</span>
@@ -40,7 +70,7 @@ class App extends Component {
             <circle className="timer__line" cx="390" cy="390" r="370" style={{filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`}} />
           </svg>
 
-          <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
+          <div className="timer__value">
             <span className="timer__mins">05</span>
             <span className="timer__dots">:</span>
             <span className="timer__secs">00</span>
@@ -54,13 +84,6 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  questions: PropTypes.array.isRequired,
-  step: PropTypes.number.isRequired,
-  mistakes: PropTypes.number.isRequired,
-  renderScreen: PropTypes.func.isRequired
-};
 
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
