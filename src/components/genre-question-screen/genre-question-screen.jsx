@@ -63,11 +63,11 @@ GenreQuestionScreen.propTypes = {
     type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
     answers: PropTypes.arrayOf(
         PropTypes.shape({
-          genre: PropTypes.oneOf([`indie-rock`, `rock`, `folk-rock`]).isRequired,
+          genre: PropTypes.string.isRequired,
           src: PropTypes.string.isRequired
         })
     ).isRequired,
-    genre: PropTypes.oneOf([`indie-rock`, `rock`, `folk-rock`]).isRequired
+    genre: PropTypes.string.isRequired
   }).isRequired,
   renderAnswer: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

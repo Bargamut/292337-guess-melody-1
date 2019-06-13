@@ -28,7 +28,7 @@ class ArtistQuestionScreen extends PureComponent {
                   onChange={() => onAnswer(it)}
                 />
                 <label className="artist__name" htmlFor={key}>
-                  <img className="artist__picture" src={it.photo} alt={it.artist} />
+                  <img className="artist__picture" src={it.picture} alt={it.artist} />
                   {it.artist}
                 </label>
               </div>
@@ -42,14 +42,14 @@ class ArtistQuestionScreen extends PureComponent {
 
 ArtistQuestionScreen.propTypes = {
   question: PropTypes.shape({
-    type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
+    type: PropTypes.string.isRequired,
     song: PropTypes.shape({
-      artist: PropTypes.oneOf([`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`]).isRequired,
+      artist: PropTypes.string.isRequired,
       src: PropTypes.string.isRequired
     }).isRequired,
     answers: PropTypes.arrayOf(PropTypes.shape({
-      artist: PropTypes.oneOf([`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`]).isRequired,
-      photo: PropTypes.string.isRequired
+      artist: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
   onAnswer: PropTypes.func.isRequired,
