@@ -5,7 +5,7 @@ class AuthorizationScreen extends PureComponent {
   render() {
     const {
       onInputChange,
-      onReplaybtnClick,
+      onReplayBtnClick,
       onFormSubmit,
       isSubmitDisabled
     } = this.props;
@@ -36,7 +36,7 @@ class AuthorizationScreen extends PureComponent {
           <button className="login__button button" type="submit" disabled={isSubmitDisabled}>Войти</button>
         </form>
 
-        <button className="replay" type="button" onClick={onReplaybtnClick}>Сыграть ещё раз</button>
+        <button className="replay" type="button" onClick={onReplayBtnClick}>Сыграть ещё раз</button>
       </section>
     );
   }
@@ -44,7 +44,7 @@ class AuthorizationScreen extends PureComponent {
 
 AuthorizationScreen.propTypes = {
   onInputChange: PropTypes.func,
-  onReplaybtnClick: PropTypes.func,
+  onReplayBtnClick: PropTypes.func,
   onFormSubmit: PropTypes.func,
   isSubmitDisabled: PropTypes.bool
 };

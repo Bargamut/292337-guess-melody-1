@@ -6,7 +6,7 @@ it(`Authorization Screen renders correctly`, () => {
   const authorizationScreen = renderer.create(
       <AuthorizationScreen
         onInputChange={jest.fn()}
-        onReplaybtnClick={jest.fn()}
+        onReplayBtnClick={jest.fn()}
         onFormSubmit={jest.fn()}
         isSubmitDisabled={true}
       />

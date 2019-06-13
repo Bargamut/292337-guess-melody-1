@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {ActionCreator} from '../../reducer/game/game';
@@ -52,11 +53,37 @@ const withScreenSwitch = (Component) => {
     }
 
     render() {
+      const {onResetGame} = this.props;
+
       return (
-        <Component
-          {...this.props}
-          renderScreen={this._getScreen}
-        />
+        <Switch>
+          <Route path="/login" render={() => (
+            <AuthorizationScreenWrapped
+              onReplayBtnClick={onResetGame}
+            />
+          )} />
+
+          <Route path="/results" render={() => (
+            <WinScreen
+              onReplayBtnClick={onResetGame}
+            />
+          )} />
+
+
+          <Route path="/lose" render={() => (
+            <GameOverScreen
+              onReplayBtnClick={onResetGame}
+            />
+          )} />
+
+
+          <Route path="/" exact render={() => (
+            <Component
+              {...this.props}
+              renderScreen={this._getScreen}
+            />
+          )}/>
+        </Switch>
       );
     }
 
@@ -71,39 +98,32 @@ const withScreenSwitch = (Component) => {
     _getScreen(question) {
       const {
         step,
+        questions,
         mistakes,
         errorCount,
-        onResetGame
+        isAuthorizationRequired
       } = this.props;
 
-      if (this.props.isAuthorizationRequired) {
-        return <AuthorizationScreenWrapped
-          onReplayBtnClick={onResetGame}
-        />;
+      if (step >= questions.length) {
+        return (isAuthorizationRequired)
+          ? <Redirect to="/login" />
+          : <Redirect to="/results" />;
+      }
+
+      if (mistakes >= errorCount) {
+        return <Redirect to="/lose" />;
       }
 
       if (!question) {
         const {
-          questions
+          time: gameTime
         } = this.props;
 
-        if (step > questions.length - 1) {
-          return <WinScreen onReplayBtnClick={onResetGame} />;
-        } else {
-          const {
-            time: gameTime
-          } = this.props;
-
-          return <WelcomeScreen
-            time={gameTime}
-            errorCount={errorCount}
-            onClickStartBtn={this._handleClickStart}
-          />;
-        }
-      }
-
-      if (mistakes >= errorCount) {
-        return <GameOverScreen onReplayBtnClick={onResetGame} />;
+        return <WelcomeScreen
+          time={gameTime}
+          errorCount={errorCount}
+          onClickStartBtn={this._handleClickStart}
+        />;
       }
 
       switch (question.type) {

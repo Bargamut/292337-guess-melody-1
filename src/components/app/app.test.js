@@ -36,15 +36,15 @@ const mock = {
       answers: [
         {
           artist: `Пелагея`,
-          photo: ``
+          picture: ``
         },
         {
           artist: `Краснознаменная дивизия имени моей бабушки`,
-          photo: ``
+          picture: ``
         },
         {
           artist: `Lorde`,
-          photo: ``
+          picture: ``
         }
       ]
     }

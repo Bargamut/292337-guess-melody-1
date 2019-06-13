@@ -14,7 +14,7 @@ const mocks = {
 describe(`Reducer works correctly`, () => {
   it(`Should return initial state by default`, () => {
     expect(reducer(undefined, {})).toEqual({
-      isAuthorizationRequired: true,
+      isAuthorizationRequired: false,
       user: {}
     });
   });

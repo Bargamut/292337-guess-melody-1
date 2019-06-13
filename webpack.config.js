@@ -11,7 +11,10 @@ module.exports = {
     // eslint-disable-next-line no-undef
     contentBase: path.join(__dirname, `public`),
     compress: false,
-    port: 1337
+    port: 1337,
+    // Перенаправление запросов на index.html
+    // Иначе редиректы не работают
+    historyApiFallback: true
   },
   module: {
     rules: [
