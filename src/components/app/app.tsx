@@ -4,35 +4,10 @@ import {connect} from 'react-redux';
 import GameMistakes from '../game-mistakes/game-mistakes';
 import {getStep, getMistakes} from '../../reducer/game/selectors';
 import {getQuestions} from '../../reducer/data/selectors';
-import { type } from 'os';
 
-enum Type {
-  ARTIST = 'artist',
-  GENRE = 'genre'
-}
+import {Type, QuestionArtist, QuestionGenre} from '../../types';
 
-interface QuestonArtist {
-  answers: {
-    artist: string,
-    picture: string
-  }[],
-  song: {
-    artist: string,
-    src: string
-  },
-  type: Type
-}
-
-interface QuestonGenre {
-  answers: {
-    artist: string,
-    picture: string
-  }[],
-  genre: string,
-  type: Type
-}
-
-type Question = QuestonArtist | QuestonGenre;
+type Question = QuestionArtist | QuestionGenre;
 
 interface Props {
   questions: Question[],
