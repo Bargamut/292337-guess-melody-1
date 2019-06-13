@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
 import history from './history';
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 
 import {createStore, applyMiddleware} from 'redux';
 import reducer from './reducer/reducer';
@@ -37,12 +37,12 @@ const init = (gameSettings) => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <BrowserRouter history={history}>
+        <Router history={history}>
           <AppWrapped
             time={gameSettings.gameTime}
             errorCount={gameSettings.errorCount}
           />
-        </BrowserRouter>
+        </Router>
       </Provider>,
       document.querySelector(`.main`)
   );

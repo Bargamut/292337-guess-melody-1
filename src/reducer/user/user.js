@@ -1,5 +1,5 @@
 const initialState = {
-  isAuthorizationRequired: true,
+  isAuthorizationRequired: false,
   user: {}
 };
 
