@@ -3,23 +3,24 @@ export enum Type {
   GENRE = 'genre'
 }
 
+export interface Song {
+  artist: string,
+  src: string
+}
+
+export interface AnswerArtist {
+  artist: string,
+  picture: string
+}
+
 export interface QuestionArtist {
-  answers: {
-    artist: string,
-    picture: string
-  }[],
-  song: {
-    artist: string,
-    src: string
-  },
+  answers: AnswerArtist[],
+  song: Song,
   type: Type
 }
 
 export interface QuestionGenre {
-  answers: {
-    artist: string,
-    picture: string
-  }[],
+  answers: [],
   genre: string,
   type: Type
 }
