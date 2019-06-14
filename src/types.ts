@@ -13,6 +13,11 @@ export interface AnswerArtist {
   picture: string
 }
 
+export interface AnswerGenre {
+  genre: string,
+  src: string
+}
+
 export interface QuestionArtist {
   answers: AnswerArtist[],
   song: Song,
@@ -20,7 +25,7 @@ export interface QuestionArtist {
 }
 
 export interface QuestionGenre {
-  answers: [],
+  answers: AnswerGenre[],
   genre: string,
   type: Type
 }
