@@ -1,16 +1,26 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+
+interface Props {
+  isPlaying: boolean,
+  onPlayBtnClick: () => void,
+  src: string
+}
+
+interface State {
+  isLoading: boolean,
+  isPlaying: boolean
+}
 
 const withAudio = (Component) => {
-  class WithAudio extends PureComponent {
+  class WithAudio extends React.PureComponent<Props, State> {
+    private _audioRef: React.RefObject<HTMLAudioElement>;
+
     constructor(props) {
       super(props);
 
-      const {isPlaying} = props;
-
       this.state = {
         isLoading: true,
-        isPlaying
+        isPlaying: props.isPlaying
       };
 
       this._audioRef = React.createRef();
@@ -35,36 +45,34 @@ const withAudio = (Component) => {
 
     componentDidMount() {
       const {src} = this.props;
-      this._audio = this._audioRef.current;
+      const audio = this._audioRef.current;
 
-      this._audio.src = src;
-      this._audio.oncanplaythrough = () => this.setState({isLoading: false});
-      this._audio.onplay = () => this.setState({isPlaying: true});
-      this._audio.onpause = () => this.setState({isPlaying: false});
+      audio.src = src;
+      audio.oncanplaythrough = () => this.setState({isLoading: false});
+      audio.onplay = () => this.setState({isPlaying: true});
+      audio.onpause = () => this.setState({isPlaying: false});
     }
 
     componentDidUpdate() {
-      this._audio = this._audioRef.current;
+      const audio = this._audioRef.current;
 
       if (this.props.isPlaying) {
-        this._audio.play();
+        audio.play();
       } else {
-        this._audio.pause();
+        audio.pause();
       }
     }
 
     componentWilUnmount() {
-      this._audio = this._audioRef.current;
+      const audio = this._audioRef.current;
 
-      this._audio.pause();
+      audio.pause();
 
-      this._audio = null;
-      this._audio.oncanplaythrough = null;
-      this._audio.onplay = null;
-      this._audio.onpause = null;
-      this._audio.ontimeupdate = null;
-      this._audio.src = ``;
-      this._audio = null;
+      audio.oncanplaythrough = null;
+      audio.onplay = null;
+      audio.onpause = null;
+      audio.ontimeupdate = null;
+      audio.src = ``;
     }
 
     _renderAudio() {
@@ -77,12 +85,6 @@ const withAudio = (Component) => {
       this.setState({isPlaying: !this.state.isPlaying});
     }
   }
-
-  WithAudio.propTypes = {
-    src: PropTypes.string.isRequired,
-    isPlaying: PropTypes.bool.isRequired,
-    onPlayBtnClick: PropTypes.func.isRequired
-  };
 
   return WithAudio;
 };
