@@ -1,7 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
-const GameOverScreen = ({onReplayBtnClick}) => {
+interface Props {
+  onReplayBtnClick: () => {}
+};
+
+const GameOverScreen:React.FunctionComponent<Props> = ({onReplayBtnClick}) => {
   return (
     <section className="result">
       <div className="result__logo">
@@ -15,10 +18,6 @@ const GameOverScreen = ({onReplayBtnClick}) => {
       <button className="replay" type="button" onClick={onReplayBtnClick}>Попробовать ещё раз</button>
     </section>
   );
-};
-
-GameOverScreen.propTypes = {
-  onReplayBtnClick: PropTypes.func.isRequired
 };
 
 export default GameOverScreen;
