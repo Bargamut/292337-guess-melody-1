@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import WelcomeScreen from './welcome-screen.jsx';
+
+import WelcomeScreen from './welcome-screen';
 
 it(`Welcome Screen correctly renders`, () => {
   const clickHandler = jest.fn();

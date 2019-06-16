@@ -1,5 +1,10 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+
+interface Props {
+  time: number,
+  errorCount: number,
+  onClickStartBtn: () => {}
+};
 
 const WelcomeScreen = (props) => {
   const {
@@ -25,12 +30,6 @@ const WelcomeScreen = (props) => {
       <p className="welcome__text">Удачи!</p>
     </section>
   );
-};
-
-WelcomeScreen.propTypes = {
-  time: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
-  onClickStartBtn: PropTypes.func
 };
 
 export default WelcomeScreen;

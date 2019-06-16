@@ -1,14 +1,15 @@
 import * as React from 'react';
-import Enzyme, {shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import WelcomeScreen from './welcome-screen.jsx';
+import * as Enzyme from 'enzyme';
+import * as Adapter from 'enzyme-adapter-react-16';
+
+import WelcomeScreen from './welcome-screen';
 
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Start button click callback runs`, () => {
   const clickHandler = jest.fn();
 
-  const welcomeScreen = shallow(
+  const welcomeScreen = Enzyme.shallow(
       <WelcomeScreen
         time={0}
         errorCount={0}
