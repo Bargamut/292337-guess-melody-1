@@ -1,7 +1,13 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
-class AuthorizationScreen extends PureComponent {
+interface Props {
+  onInputChange: (event: React.ChangeEvent, keyName?: string) => {},
+  onReplayBtnClick: () => {},
+  onFormSubmit: () => {},
+  isSubmitDisabled: boolean
+};
+
+class AuthorizationScreen extends React.PureComponent<Props, null> {
   render() {
     const {
       onInputChange,
@@ -41,12 +47,5 @@ class AuthorizationScreen extends PureComponent {
     );
   }
 }
-
-AuthorizationScreen.propTypes = {
-  onInputChange: PropTypes.func,
-  onReplayBtnClick: PropTypes.func,
-  onFormSubmit: PropTypes.func,
-  isSubmitDisabled: PropTypes.bool
-};
 
 export default AuthorizationScreen;

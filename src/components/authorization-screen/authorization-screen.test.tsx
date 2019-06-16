@@ -1,6 +1,7 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import AuthorizationScreen from './authorization-screen.js';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
+
+import AuthorizationScreen from './authorization-screen';
 
 it(`Authorization Screen renders correctly`, () => {
   const authorizationScreen = renderer.create(
