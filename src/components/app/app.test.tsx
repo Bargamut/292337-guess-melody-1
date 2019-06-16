@@ -1,12 +1,13 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import {App} from "./app.js";
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
 
+import {App} from "./app.js";
+import { Type } from '../../types';
 
 const mock = {
   questions: [
     {
-      type: `genre`,
+      type: Type.GENRE,
       genre: `indie-rock`,
       answers: [
         {
@@ -28,7 +29,7 @@ const mock = {
       ]
     },
     {
-      type: `artist`,
+      type: Type.ARTIST,
       song: {
         artist: `Пелагея`,
         src: ``
@@ -56,14 +57,9 @@ it(`App correctly renders with Welcome Screen`, () => {
 
   const tree = renderer
     .create(<App
-      time={0}
-      errorCount={0}
       questions={questions}
       step={-1}
       mistakes={0}
-      onClickStartBtn={jest.fn()}
-      onUserAnswer={jest.fn()}
-      onResetGame={jest.fn()}
       renderScreen={jest.fn()}
     />,
     {
@@ -87,14 +83,9 @@ it(`App correctly renders with Genre Question Screen`, () => {
 
   const tree = renderer
     .create(<App
-      time={0}
-      errorCount={0}
       questions={questions}
       step={0}
       mistakes={0}
-      onClickStartBtn={jest.fn()}
-      onUserAnswer={jest.fn()}
-      onResetGame={jest.fn()}
       renderScreen={jest.fn()}
     />,
     {
@@ -118,14 +109,9 @@ it(`App correctly renders with Artist Question Screen`, () => {
 
   const tree = renderer
     .create(<App
-      time={0}
-      errorCount={0}
       questions={questions}
       step={1}
       mistakes={0}
-      onClickStartBtn={jest.fn()}
-      onUserAnswer={jest.fn()}
-      onResetGame={jest.fn()}
       renderScreen={jest.fn()}
     />,
     {
