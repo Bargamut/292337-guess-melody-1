@@ -1,5 +1,8 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+
+interface Props {
+  onReplayBtnClick: () => {}
+};
 
 const WinScreen = ({onReplayBtnClick}) => {
   return (
@@ -20,10 +23,6 @@ const WinScreen = ({onReplayBtnClick}) => {
       <button className="replay" type="button" onClick={onReplayBtnClick}>Сыграть ещё раз</button>
     </section>
   );
-};
-
-WinScreen.propTypes = {
-  onReplayBtnClick: PropTypes.func.isRequired
 };
 
 export default WinScreen;
