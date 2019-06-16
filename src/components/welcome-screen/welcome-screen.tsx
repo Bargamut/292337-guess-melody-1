@@ -3,7 +3,7 @@ import * as React from 'react';
 interface Props {
   time: number,
   errorCount: number,
-  onClickStartBtn: () => {}
+  onClickStartBtn: () => void
 };
 
 const WelcomeScreen:React.FunctionComponent<Props> = (props) => {

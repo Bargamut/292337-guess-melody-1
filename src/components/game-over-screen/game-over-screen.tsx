@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 interface Props {
-  onReplayBtnClick: () => {}
+  onReplayBtnClick: () => void
 };
 
 const GameOverScreen:React.FunctionComponent<Props> = ({onReplayBtnClick}) => {
