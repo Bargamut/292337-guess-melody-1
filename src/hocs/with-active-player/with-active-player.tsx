@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Subtract } from 'utility-types';
-import AudioPlayer from '../../components/audio-player/audio-player.jsx';
+
+import AudioPlayer from '../../components/audio-player/audio-player';
 import withAudio from '../with-audio/with-audio';
 
 interface State {
