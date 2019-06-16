@@ -1,10 +1,12 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
+
+import { Type } from '../../types';
 import ArtistQuestionScreen from './artist-question-screen.js';
 
 const mock = {
   question: {
-    type: `artist`,
+    type: Type.ARTIST,
     song: {
       artist: `Пелагея`,
       src: ``
