@@ -43,7 +43,6 @@ exports[`App correctly renders with Artist Question Screen 1`] = `
     </svg>
     <div
       className="timer__value"
-      xmlns="http://www.w3.org/1999/xhtml"
     >
       <span
         className="timer__mins"
@@ -111,7 +110,6 @@ exports[`App correctly renders with Genre Question Screen 1`] = `
     </svg>
     <div
       className="timer__value"
-      xmlns="http://www.w3.org/1999/xhtml"
     >
       <span
         className="timer__mins"
@@ -179,7 +177,6 @@ exports[`App correctly renders with Welcome Screen 1`] = `
     </svg>
     <div
       className="timer__value"
-      xmlns="http://www.w3.org/1999/xhtml"
     >
       <span
         className="timer__mins"

@@ -1,13 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import {configure, shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import GenreQuestionScreen from './genre-question-screen.jsx';
+import * as Adapter from 'enzyme-adapter-react-16';
+
+import { Type } from '../../types';
+import GenreQuestionScreen from './genre-question-screen';
 
 configure({adapter: new Adapter()});
 
 const mock = {
   question: {
-    type: `genre`,
+    type: Type.GENRE,
     genre: `rock`,
     answers: [
       {

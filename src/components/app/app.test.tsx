@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 
-import {App} from "./app.js";
+import {App} from "./app";
 import { Type } from '../../types';
 
 const mock = {
