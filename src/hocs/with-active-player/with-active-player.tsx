@@ -1,11 +1,28 @@
-import React, {PureComponent} from 'react';
+import * as React from 'react';
+import { Subtract } from 'utility-types';
 import AudioPlayer from '../../components/audio-player/audio-player.jsx';
 import withAudio from '../with-audio/with-audio';
+
+interface State {
+  activePlayerKey: string | null
+}
+
+// Пропсы, добавляемые HOC'ом
+interface InjectedProps {
+  renderPlayer: (song: {src: string}, key: string) => typeof AudioPlayerWrapped
+}
 
 const AudioPlayerWrapped = withAudio(AudioPlayer);
 
 const withActivePlayer = (Component) => {
-  class WithActivePlayer extends PureComponent {
+  // Получаем пропсы переданного компонента
+  type P = React.ComponentProps<typeof Component>;
+
+  // Вычисляем реальные пропсы для передачи в обёрнутый компонент
+  // Условно: T = P - InjectedProps
+  type T = Subtract<P, InjectedProps>;
+
+  class WithActivePlayer extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);
 
@@ -43,8 +60,6 @@ const withActivePlayer = (Component) => {
       });
     }
   }
-
-  WithActivePlayer.propTypes = {};
 
   return WithActivePlayer;
 };
