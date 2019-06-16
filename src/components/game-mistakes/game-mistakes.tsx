@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
-const GameMistakes = ({mistakes}) => {
+interface Props {
+  mistakes: number
+};
+
+const GameMistakes: React.FunctionComponent<Props> = ({mistakes}) => {
   return (
     <div className="game__mistakes">
-      {new Array(mistakes).fill().map((it, i) => {
+      {new Array(mistakes).fill(0).map((_, i: number) => {
         return <div className="wrong" key={`wrong-answer-${i}`} />;
       })}
     </div>
   );
-};
-
-GameMistakes.propTypes = {
-  mistakes: PropTypes.number.isRequired
 };
 
 export default GameMistakes;

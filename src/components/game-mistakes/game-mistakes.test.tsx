@@ -1,6 +1,7 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import GameMistakes from './game-mistakes.jsx';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
+
+import GameMistakes from './game-mistakes';
 
 it(`Game Mistakes renders without mistakes`, () => {
   const gameMistakes = renderer.create(<GameMistakes mistakes={0} />);
