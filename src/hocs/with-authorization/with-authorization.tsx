@@ -1,12 +1,21 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {createAPI} from '../../api';
 import {ActionCreator} from '../../reducer/user/user';
 
+interface State {
+  email: string,
+  password: string
+};
+
+interface Props {
+  onReplayBtnClick: () => void,
+  login: (state: object) => void
+};
+
 const withAuthorization = (Component) => {
-  class WithAuthorization extends PureComponent {
+  class WithAuthorization extends React.PureComponent<Props, State> {
     constructor(props) {
       super(props);
 
@@ -20,9 +29,11 @@ const withAuthorization = (Component) => {
     }
 
     _handleInputChange(evt, keyName) {
-      this.setState({
-        [keyName]: evt.target.value
-      });
+      const diffState = {};
+
+      diffState[keyName] = evt.target.value;
+
+      this.setState(diffState);
     }
 
     _handleFormSubmit(evt) {
@@ -42,11 +53,6 @@ const withAuthorization = (Component) => {
       );
     }
   }
-
-  WithAuthorization.propTypes = {
-    onReplayBtnClick: PropTypes.func,
-    login: PropTypes.func
-  };
 
   return WithAuthorization;
 };
