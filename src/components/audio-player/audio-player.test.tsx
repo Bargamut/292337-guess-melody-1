@@ -1,20 +1,19 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import AudioPlayer from './audio-player.js';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
+
+import AudioPlayer from './audio-player';
 
 const mocks = {
-  src: ``,
   isPlaying: false,
   isLoading: true,
   onPlayBtnClick: jest.fn()
 };
 
 it(`AudioPlayer renders correctly`, () => {
-  const {src, isLoading, isPlaying, onPlayBtnClick} = mocks;
+  const {isLoading, isPlaying, onPlayBtnClick} = mocks;
 
   const audioPlayer = renderer.create(
       <AudioPlayer
-        src={src}
         isPlaying={isPlaying}
         isLoading={isLoading}
         onPlayBtnClick={onPlayBtnClick}
