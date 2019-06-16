@@ -6,7 +6,7 @@ interface Props {
   onClickStartBtn: () => {}
 };
 
-const WelcomeScreen = (props) => {
+const WelcomeScreen:React.FunctionComponent<Props> = (props) => {
   const {
     time,
     errorCount,
