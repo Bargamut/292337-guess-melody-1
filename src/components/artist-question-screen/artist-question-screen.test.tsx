@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 
 import { Type } from '../../types';
-import ArtistQuestionScreen from './artist-question-screen.js';
+import ArtistQuestionScreen from './artist-question-screen';
 
 const mock = {
   question: {

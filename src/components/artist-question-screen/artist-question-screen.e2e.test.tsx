@@ -3,7 +3,7 @@ import {configure, shallow} from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 
 import { Type } from '../../types';
-import ArtistQuestionScreen from './artist-question-screen.js';
+import ArtistQuestionScreen from './artist-question-screen';
 
 configure({adapter: new Adapter()});
 
