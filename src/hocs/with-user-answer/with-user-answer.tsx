@@ -1,8 +1,35 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Subtract } from 'utility-types';
+
+interface State {
+  userAnswer: boolean[]
+};
+
+interface Props {
+  question: {
+    type: string,
+    answers: {
+      genre: string,
+      src: string
+    }[],
+    genre: string
+  },
+  onAnswer: (answers: boolean[]) => void
+};
+
+interface InjectedProps {
+  userAnswer: boolean[],
+  onChange: (i: number) => void,
+  onAnswer: () => void
+};
 
 const withUserAnswer = (Component) => {
-  class WithUserAnswer extends PureComponent {
+  // Объединяем с Props
+  type P = Props & React.ComponentProps<typeof Component>;
+
+  type T = Subtract<P, InjectedProps>;
+
+  class WithUserAnswer extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);
 
@@ -54,20 +81,6 @@ const withUserAnswer = (Component) => {
       onAnswer(this.state.userAnswer);
     }
   }
-
-  WithUserAnswer.propTypes = {
-    question: PropTypes.shape({
-      type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
-      answers: PropTypes.arrayOf(
-          PropTypes.shape({
-            genre: PropTypes.string.isRequired,
-            src: PropTypes.string.isRequired
-          })
-      ).isRequired,
-      genre: PropTypes.string.isRequired
-    }).isRequired,
-    onAnswer: PropTypes.func.isRequired
-  };
 
   return WithUserAnswer;
 };
